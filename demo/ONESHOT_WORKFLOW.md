@@ -43,11 +43,17 @@
 1. 확인 → 원본 PDF·data.csv·report.xlsx·출처표·SOURCE.md·CHECK.md 열기; 숫자·화면·이용 조건·논문 본문 검토
 2. 판단 → report.qmd에서 인기의 기준·차트 A/B·미확인 항목 처리 결정; NEXT_STEPS.md에 기록
 3. 우리 글로 수정 → report.qmd 첫 문장·관심·해석 수정; NEXT_STEPS.md에 고친 문장·이유 기록
-4. 다시 생성 → README의 실제 scripts·Quarto 실행; HTML·엑셀을 원본과 재대조
+4. 다시 생성 → `python scripts/oneshot.py --recheck .`; 원본 재추출·재렌더·HTML·엑셀 재대조
 5. 공유 → team-chat.txt 수정; 사람 확인자·날짜 갱신; 실제 공유 주소 확인 후 사람이 승인·직접 전송
 
+## 단계마다 나오는 것
+- 확인·판단·수정·공유 → NEXT_STEPS.md "우리 기록" 칸
+- 수정 → RECHECK.md의 AI 초안 대비 바뀐 문장; 기준 = drafts/ 보관본
+- 다시 생성 → 새 report.html·RECHECK.md(숫자 대조·단계 체크·남은 미확인)
+- 재대조 불일치 → RECHECK.md에 기록·종료 코드 실패; 통과로 보고 금지
+
 ## 다음 단계 연결
-- NEXT_STEPS.md = 위 다섯 단계의 실행별 체크리스트; 모든 항목에 실제 파일·출처·절 링크
+- NEXT_STEPS.md = 위 다섯 단계의 실행별 체크리스트; 모든 항목에 실제 파일·출처·절 링크·나오는 것
 - report.qmd = 작성 과정 기록 다음에 NEXT_STEPS.md include; 출처·윤리 가이드가 뒤따름
 - 링크 형식 = 결과 폴더 기준 상대경로; 보고서 절은 고정 앵커; 클릭 대상과 실행 명령 구별
 - 공유 = HTML 자체는 이미지·폰트 내장; 별도 파일 링크는 폴더 구조 유지 필요; 로컬 경로를 팀 공유 주소로 대체 금지
