@@ -132,6 +132,10 @@ body { background: var(--paper); }
 .reveal .qr-panel { position: absolute; right: 64px; top: 215px; width: 190px; padding: 18px 10px; border: 1px solid var(--rule); border-radius: 18px; background: white; text-align: center; }
 .reveal .qr-panel p { margin: 0; font-size: 18px; }
 .reveal .qr-panel img { width: 160px; height: 160px; margin: 0; }
+.reveal .qr-panel.qr-mini { top: 22px; right: 44px; width: 116px; padding: 8px 6px; border-radius: 12px; z-index: 5; }
+.reveal .qr-panel.qr-mini img { width: 96px; height: 96px; }
+.reveal .qr-panel.qr-mini > *, .reveal .qr-panel.qr-mini figure, .reveal .qr-panel.qr-mini p { margin: 0; }
+.reveal .qr-panel.qr-mini .qr-caption { padding-top: 4px; }
 .reveal .qr-caption { display: block; font-size: 12px; color: var(--muted); padding-top: 8px; }
 .reveal #title-slide, .reveal section.title-slide {
   background: radial-gradient(circle at 92% 18%, #d7e6d8 0, #d7e6d8 13%, transparent 13.1%), radial-gradient(circle at 92% 18%, transparent 0, transparent 24%, #e5eadf 24.1%, #e5eadf 24.4%, transparent 24.5%), #183f3b;
