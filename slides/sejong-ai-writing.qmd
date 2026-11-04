@@ -16,6 +16,7 @@ format:
     include-in-header: slide-fonts.html
     theme: [default, sejong-slides.scss]
     toc: false
+    html-math-method: plain
     width: 1280
     height: 720
     margin: 0
