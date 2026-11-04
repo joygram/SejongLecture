@@ -183,7 +183,7 @@
 <div class="story-chat">
 <div class="chat-bubble student">
 <p><span class="chat-who">지민</span></p>
-<p>“우리 팀은 올해 7급 시험 현황으로 리포트 쓰자.”</p>
+<p>“우리 팀은 올해 국가공무원 7급 시험 현황으로 리포트 쓰자.”</p>
 </div>
 <div class="chat-bubble assistant">
 <p><span class="chat-who">나</span></p>
@@ -204,8 +204,8 @@
 </div>
 </div>
 </section>
-<section id="이-질문에-답하는-리포트를-만들-거예요" class="slide level2 lecture-goals">
-<h2>이 질문에 답하는 리포트를 만들 거예요</h2>
+<section id="오늘-할-일-ai와-함께-팀-리포트-한-편-완성하기" class="slide level2 lecture-goals">
+<h2>오늘 할 일: AI와 함께 팀 리포트 한 편 완성하기</h2>
 <div class="flow-line">
 <p><span>쓸 말 정하기</span> <span>초안 만들기</span> <span>자료와 맞추기</span> <span>고쳐서 공유하기</span></p>
 </div>
@@ -240,49 +240,39 @@
 <section id="그래서-우리-팀은-무슨-말을-하려는-건가요" class="slide level2">
 <h2>그래서, 우리 팀은 무슨 말을 하려는 건가요?</h2>
 <blockquote>
-<p>올해 7급 시험에는 어떤 분야에 사람이 많이 왔을까? 사람이 많이 온 분야가 인기 있는 분야 아닐까? 자료는 아직 못 봤다. ‘인기 있는’이라고 써도 되는지 모르겠다.</p>
+<p>올해 국가공무원 7급 시험에는 어떤 분야에 사람이 많이 왔을까?<br>
+사람이 많이 온 분야가 인기 있는 분야 아닐까?<br>
+자료를 보고 인기 있는 분야를 하나 골라 리포트에 쓰고 싶다.</p>
 </blockquote>
 <p><strong>우리 팀의 출발 메모</strong></p>
-<p><strong>무엇을 알아보고, 누구에게 쓸 것인가?</strong></p>
-</section>
-<section id="프롬프트-4요소-우리-팀의-부탁" class="slide level2">
-<h2>프롬프트 4요소 — 우리 팀의 부탁</h2>
-<div class="tile-grid four">
-<div class="tile">
-<p><span class="tile-title">맥락</span></p>
-<p>7급 시험 현황을 처음 읽는 팀원에게 설명할 리포트</p>
-</div>
-<div class="tile">
-<p><span class="tile-title">역할</span></p>
-<p>우리 메모를 정리하고 빠진 점을 물어보는 편집 동료</p>
-</div>
-<div class="tile">
-<p><span class="tile-title">제약</span></p>
-<p>확인하지 않은 사실은 넣지 않기 · 서론 5문장</p>
-</div>
-<div class="tile">
-<p><span class="tile-title">예시</span></p>
-<p>“우리는 어떤 분야에 시험을 본 사람이 많았는지 궁금했다.”</p>
-</div>
-</div>
-<p><a href="https://arxiv.org/abs/2302.11382" class="reference-note">네 묶음은 본 강의의 실무 체크리스트 · 관련 연구: White 외(2023), arXiv 공개 원고. 네 요소의 제창 논문이 아님.</a></p>
+<p><strong>어떤 내용을 주제로 할 것인가?</strong></p>
 </section>
 <section id="리포트-써줘에서-한-걸음-더" class="slide level2">
 <h2>“리포트 써줘”에서 한 걸음 더</h2>
 <div class="before-after">
 <div class="ba-cell">
 <p><strong>처음 부탁</strong></p>
-<p>“7급 공무원 시험 리포트 써줘.”</p>
+<p>“올해 7급 공무원 시험 리포트 써줘.”</p>
 </div>
 <div class="ba-cell">
 <p><strong>우리 팀의 부탁</strong></p>
-<p>“메모 세 줄을 살려 서론 5문장으로 정리해줘. 아직 자료를 안 줬으니 숫자는 넣지 마. 우리 생각이 모호하면 먼저 물어봐.”</p>
+<p>“올해 국가공무원 7급 시험에서 인기 있는 분야를 골라 팀원에게 설명할 리포트야. 메모 세 줄을 살려 서론 5문장으로 정리해줘. 숫자가 들어갈 자리는 [자료 확인 후]로 비워 둬.”</p>
 </div>
 </div>
 <p><strong>두 초안에서 우리 팀의 질문은 어디에 남았나?</strong></p>
 </section>
-<section id="초안에-쓸-말-자료에서-어디까지-알-수-있나요" class="slide level2 bridge-slide">
-<h2>초안에 쓸 말, 자료에서 어디까지 알 수 있나요?</h2>
+<section id="실제-부탁은-이렇게-네-가지로-짜요" class="slide level2">
+<h2>실제 부탁은 이렇게 네 가지로 짜요</h2>
+<ul>
+<li><strong>맥락</strong> — “올해(2026년) 국가공무원 7급 공채 시험 현황으로 팀 리포트를 만들려고 해. 주제는 ‘올해 어느 분야가 인기 있는 분야인가’야.”</li>
+<li><strong>역할</strong> — “너는 우리 팀 리포트를 같이 쓰는 편집자야. 우리 메모를 정리하고, 빠진 점은 물어봐.”</li>
+<li><strong>제약</strong> — “서론은 5문장으로, 숫자 자리는 [자료 확인 후]로 비우고, 끝에 나에게 물을 질문 1개만 붙여.”</li>
+<li><strong>예시</strong> — “문장은 ‘우리는 어떤 분야에 시험을 본 사람이 많았는지 궁금했다.’처럼 쉬운 말로.”</li>
+</ul>
+<p><a href="https://arxiv.org/abs/2302.11382" class="reference-note">네 묶음은 본 강의의 실무 체크리스트 · 관련 연구: White 외(2023), arXiv 공개 원고. 네 요소의 제창 논문이 아님.</a></p>
+</section>
+<section id="자료에서-무엇을-알-수-있나요" class="slide level2 bridge-slide">
+<h2>자료에서 무엇을 알 수 있나요?</h2>
 <div class="bridge-art">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -306,8 +296,8 @@
 </div>
 </div>
 </section>
-<section id="우리-질문에-필요한-건-이-두-칸이에요" class="slide level2">
-<h2>우리 질문에 필요한 건 이 두 칸이에요</h2>
+<section id="자료에서-필요한-건-분야와-시험을-본-사람-수예요" class="slide level2">
+<h2>자료에서 필요한 건 분야와 시험을 본 사람 수예요</h2>
 <p><strong>어느 분야에서, 몇 명이 실제로 시험을 봤나요?</strong></p>
 <table class="caption-top">
 <thead>
@@ -334,10 +324,10 @@
 <p><strong>응시 인원 = 실제로 시험을 본 사람 수</strong></p>
 <p><a href="../demo/cases/d-grade7/SOURCE.md" class="reference-note">자료: 인사혁신처, 2026년 국가공무원 7급 공채 1차 필기시험 응시현황 · 직군 계</a></p>
 </section>
-<section id="같은-숫자-무엇을-먼저-보여줄까요" class="slide level2 chart-check">
-<h2>같은 숫자, 무엇을 먼저 보여줄까요?</h2>
-<p><span class="story-label">같은 자료·같은 축·같은 순서, 강조하는 분야만 다른 두 표현</span></p>
-<div id="645fa64d" class="cell" data-fig-height="3.1" data-fig-width="11" data-execution_count="3">
+<section id="같은-숫자-어디에-초점을-둘까요" class="slide level2 chart-check">
+<h2>같은 숫자, 어디에 초점을 둘까요?</h2>
+<p><span class="story-label">같은 자료·같은 축·같은 순서, 초점을 둔 분야만 다른 두 표현</span></p>
+<div id="b80454f2" class="cell" data-fig-height="3.1" data-fig-width="11" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -346,11 +336,11 @@
 </div>
 </div>
 </div>
-<p><strong>어디에 사람이 많은지 보여줄까, 적은 분야도 살펴보게 할까?</strong></p>
-<p>두 그림 모두 같은 사실이에요. 제목과 강조가 보는 사람의 시선을 바꿔요.</p>
+<p><strong>사람이 많은 분야에 초점을 둘까, 적은 분야까지 살펴보게 할까?</strong></p>
+<p>두 그림 모두 같은 사실이에요. 글에서도 어디에 초점을 두느냐가 읽는 사람의 첫인상을 정해요.</p>
 </section>
-<section id="사람이-많으면-인기-있는-직업인가요" class="slide level2">
-<h2>사람이 많으면, 인기 있는 직업인가요?</h2>
+<section id="사람이-많다는-것만으로-인기-있는-분야라고-할-수-있나요" class="slide level2">
+<h2>사람이 많다는 것만으로, 인기 있는 분야라고 할 수 있나요?</h2>
 <div class="before-after">
 <div class="ba-cell">
 <p><strong>자료에서 확인한 문장</strong></p>
@@ -359,11 +349,11 @@
 </div>
 <div class="ba-cell">
 <p><strong>우리 생각이 앞서간 문장</strong></p>
-<p>“행정직이 가장 인기 있는 직업이다.”</p>
+<p>“행정직이 가장 인기 있는 분야다.”</p>
 <p>이 표에 있는 것은 시험을 본 사람 수.</p>
 </div>
 </div>
-<p><strong>시험을 본 사람이 많다 → 직업이 인기 있다?</strong></p>
+<p><strong>시험을 본 사람이 많다 → 인기 있는 분야다?</strong></p>
 <p>이유를 알려면, 시험을 본 사람들의 선택 배경도 들어봐야 해요.</p>
 </section>
 <section id="초안이-생겼다면-제출-전에" class="slide level2">
@@ -401,7 +391,7 @@
 <h1>2부 · 초안부터 공유까지, 직접 해봐요</h1>
 
 </section>
-<section id="지금부터-우리-팀이-할-일" class="slide level2 with-qr">
+<section id="지금부터-우리-팀이-할-일" class="slide level2">
 <h2>지금부터 우리 팀이 할 일</h2>
 <table class="caption-top">
 <thead>
@@ -430,45 +420,20 @@
 </tbody>
 </table>
 <p>같은 자료로 쓴 글이 단계마다 어떻게 달라지는지 볼게요.</p>
-<div class="qr-panel">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="180"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">초안 · 자료 정리 · 퇴고</span></p>
-</div>
 </section>
 <section id="카드-1-메모를-붙여-초안을-받아요" class="slide level2">
 <h2>카드 1 · 메모를 붙여 초안을 받아요</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
-<p>“우리 팀은 7급 공채 현황으로 짧은 팀 리포트를 만들려고 해. 질문은 <strong>‘어느 분야에 시험 본 사람이 많았고, 인기라고 해도 되는가’</strong>야.”</p>
+<p>“우리 팀은 올해(2026년) 국가공무원 7급 공채 시험 현황으로 짧은 팀 리포트를 만들려고 해. 주제는 <strong>‘올해 어느 분야가 인기 있는 분야인가’</strong>야. 자료의 숫자로 근거를 대서 정하려고 해.”</p>
 <blockquote>
-<p>올해 7급 시험에는 어떤 분야에 사람이 많이 왔을까? 사람이 많이 온 분야가 인기 있는 분야 아닐까? 자료는 아직 못 봤다. ‘인기 있는’이라고 써도 되는지 모르겠다.</p>
+<p>올해 국가공무원 7급 시험에는 어떤 분야에 사람이 많이 왔을까?<br>
+사람이 많이 온 분야가 인기 있는 분야 아닐까?<br>
+자료를 보고 인기 있는 분야를 하나 골라 리포트에 쓰고 싶다.</p>
 </blockquote>
-<p>“이 대화에서 우리 팀의 글쓰기 도우미가 되어줘. 먼저 위 메모로 서론을 <strong>5문장</strong>으로 써줘. 숫자는 만들지 말고, 끝에 나에게 물을 질문 1개만 붙여.”</p>
+<p>“너는 우리 팀 리포트를 같이 쓰는 편집자야. 먼저 위 메모로 서론을 <strong>5문장</strong>으로 써줘. 숫자가 들어갈 자리는 [자료 확인 후]로 비워 두고, 끝에 나에게 물을 질문 1개만 붙여. 문장은 ‘우리는 어떤 분야에 시험을 본 사람이 많았는지 궁금했다.’처럼 쉬운 말로 써줘.”</p>
 <p><strong>선택: 살릴 문장 하나 · 바꿀 문장 하나</strong></p>
 </section>
 <section id="카드-2-아까-본-표를-붙여요" class="slide level2 data-practice">
 <h2>카드 2 · 아까 본 표를 붙여요</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -491,20 +456,11 @@
 </tr>
 </tbody>
 </table>
-<p>“이 표에서 알 수 있는 사실을 숫자 그대로 <strong>세 문장</strong>으로 써줘. 사람이 많은 분야를 <strong>‘인기 있다’고 해도 되는지</strong>, 알 수 있는 것과 없는 것으로 나눠 답해줘. 같은 수치로 그래프 이미지를 <strong>1장</strong>만 만들어줘. <strong>왼쪽 A는 행정직만, 오른쪽 B는 외무영사직만 강조</strong>, 축·순서는 같게.”</p>
+<p>“이 표에서 알 수 있는 사실을 숫자 그대로 <strong>세 문장</strong>으로 써줘. 이 자료로 <strong>인기 있는 분야를 고른다면 어디인지</strong>, 근거와 아직 알 수 없는 것을 나눠 답해줘. 같은 수치로 그래프 이미지를 <strong>1장</strong>만 만들어줘. <strong>왼쪽 A는 행정직만, 오른쪽 B는 외무영사직만 강조</strong>, 축·순서는 같게.”</p>
 <p><strong>확인: 문장 속 숫자와 원표의 숫자가 같은가? 두 그림의 축·순서는 같은가?</strong></p>
 </section>
 <section id="카드-3-전문적으로보다-우리-뜻대로" class="slide level2">
 <h2>카드 3 · “전문적으로”보다 “우리 뜻대로”</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
 <div class="before-after">
 <div class="ba-cell">
 <p><strong>이렇게 부탁하면</strong></p>
@@ -513,23 +469,53 @@
 </div>
 <div class="ba-cell">
 <p><strong>우리 뜻을 남기는 요청</strong></p>
-<p>“지금까지 쓴 글에서 팀 메모에 없던 주장·상투적 표현만 짚어 그 문장만 고쳐. 그다음 처음 질문에 답하는 완성본을 정리해: 질문 → 서론 → 표 → 그림 → 세 문장 → 인기라고 할 수 있을까 → 알 수 없는 것 → 출처.”</p>
+<p>“지금까지 쓴 글에서 팀 메모에 없던 주장·상투적 표현만 짚어 그 문장만 고쳐. 그다음 처음 정한 주제에 맞는 완성본을 정리해: 질문 → 서론 → 표 → 그림 → 세 문장 → 인기라고 할 수 있을까 → 알 수 없는 것 → 출처.”</p>
 <p>→ “어떤 분야에 시험을 본 사람이 많았는지 먼저 살펴봤다.”</p>
 </div>
 </div>
 <p><strong>이 문장에서 무엇을 고쳤고, 왜 고쳤나?</strong></p>
 </section>
-<section id="한-번의-요청으로-자료-수집부터-보고서까지" class="slide level2">
-<h2>한 번의 요청으로, 자료 수집부터 보고서까지</h2>
-<div class="qr-panel qr-mini">
+<section id="직접-해보기" class="slide level2 with-qr">
+<h2>직접 해보기</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>순서</th>
+<th>붙여 넣을 카드</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>카드 1 · 메모로 서론 받기</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>카드 2 · 표로 세 문장과 그래프 받기</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>카드 3 · 우리 뜻대로 고쳐 완성본 받기</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>완성 뒤 · 팀 채팅 메시지 받기</td>
+</tr>
+</tbody>
+</table>
+<p>QR을 찍고, 같은 채팅에 순서대로 붙여 넣어요.</p>
+<div class="qr-panel">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
+<p><img data-src="prompts-qr.svg" width="180"></p>
 <figcaption>프롬프트 카드</figcaption>
 </figure>
 </div>
 <p><span class="qr-caption">프롬프트 카드</span></p>
 </div>
+</section>
+<section id="한-번의-요청으로-자료-수집부터-보고서까지" class="slide level2">
+<h2>한 번의 요청으로, 자료 수집부터 보고서까지</h2>
 <div class="flow-line">
 <p><span>새 작업 폴더</span> <span>원자료 수집</span> <span>시트와 차트</span> <span>리포트와 요약</span></p>
 </div>
@@ -537,35 +523,52 @@
 <p>“새 폴더에 공식 자료를 구해서, 수정 가능한 엑셀 시트와 차트를 만들어줘. 같은 자료로 보고서와 팀 채팅 요약까지 만들고, 출처와 확인 못 한 부분도 남겨줘.”</p>
 <p><strong>남길 파일: 완성본 + 다시 고칠 원본</strong></p>
 </section>
-<section id="대화하는-ai에서-내-작업-환경으로" class="slide level2 platform-workflow">
-<h2>대화하는 AI에서, 내 작업 환경으로</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
-<div class="big-flow"><div class="big-flow-node"><span class="big-flow-number">01</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v13H9l-6 4zM7 8h10M7 12h7"></path></svg><strong>대화로 초안</strong><small>ChatGPT · Gemini</small><span class="big-flow-desc">질문하고 선택지 받기</span></div><div class="big-flow-node"><span class="big-flow-number">02</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="9" cy="6" r="2"></circle><circle cx="15" cy="12" r="2"></circle><circle cx="8" cy="18" r="2"></circle></svg><strong>내 기준 재사용</strong><small>Gem · 프로젝트 지침</small><span class="big-flow-desc">문체·목차·조건 남기기</span></div><div class="big-flow-node"><span class="big-flow-number">03</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zM13 7l4 4"></path></svg><strong>문서 재편집</strong><small>Docs · 편집 원본</small><span class="big-flow-desc">자료와 내 글을 연결</span></div><div class="big-flow-node"><span class="big-flow-number">04</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"></path></svg><strong>계산·갱신</strong><small>코딩 에이전트 · Quarto</small><span class="big-flow-desc">표·그림·본문 다시 만들기</span></div></div>
+<section id="도구가-달라도-흐름은-같아요" class="slide level2 platform-workflow">
+<h2>도구가 달라도, 흐름은 같아요</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>같은 흐름</th>
+<th>대화하는 AI · ChatGPT · Gemini</th>
+<th>코딩 에이전트 · Claude Code · Codex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 자료와 맥락 주기</td>
+<td>메모와 표를 채팅에 붙여 넣기</td>
+<td>프로젝트 폴더에 자료와 지침 파일 두기</td>
+</tr>
+<tr class="even">
+<td>2 초안과 그림 요청</td>
+<td>채팅에서 서론과 그래프 받기</td>
+<td>같은 요청으로 시트·차트·보고서 파일 만들기</td>
+</tr>
+<tr class="odd">
+<td>3 확인하고 고치기</td>
+<td>답을 읽고 내 문장 고르기</td>
+<td>파일을 열어 숫자를 원본과 대조하기</td>
+</tr>
+<tr class="even">
+<td>4 다음에도 쓰게 남기기</td>
+<td>Gem·프로젝트 지침에 저장</td>
+<td>지침 파일·스크립트로 다시 실행</td>
+</tr>
+</tbody>
+</table>
 <div class="takeaway">
-<p>내 문장·목차·자료를 남겨, <strong>다음 보고서도 고쳐 쓸 수 있게</strong>.</p>
+<p>어떤 도구든 <strong>맥락을 주고, 요청하고, 확인하고, 남기는</strong> 일은 그대로예요.</p>
 </div>
 <p><a href="https://support.google.com/gemini/answer/18560919?hl=ko" class="case-source">참고: Gemini 맞춤 지침</a> · <a href="https://learn.chatgpt.com/docs/projects" class="case-source">ChatGPT 프로젝트</a></p>
 </section>
-<section id="처음-질문에-답하는-리포트가-됐나요" class="slide level2">
-<h2>처음 질문에 답하는 리포트가 됐나요?</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
-<p><strong>2026년 7급 공채, 어느 분야에 시험을 본 사람이 많았을까?</strong></p>
+<section id="처음-정한-주제에-맞는-리포트가-됐나요" class="slide level2">
+<h2>처음 정한 주제에 맞는 리포트가 됐나요?</h2>
+<p><strong>2026년 국가공무원 7급 공채, 어느 분야에 시험을 본 사람이 많았을까?</strong></p>
 <blockquote>
 <p>자료를 펼쳤을 때 가장 먼저 눈에 들어온 것은 행정직의 응시 인원이었다. 행정직은 11,447명으로, 과학기술직 2,871명과 외무영사직 1,216명보다 많았다. 다만 사람이 더 많이 왔다는 사실만으로 직업의 인기를 말하지는 않았다.</p>
 </blockquote>
@@ -573,15 +576,6 @@
 </section>
 <section id="마지막은-같은-팀-채팅방으로" class="slide level2 team-share">
 <h2>마지막은, 같은 팀 채팅방으로</h2>
-<div class="qr-panel qr-mini">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="prompts-qr.svg" width="96"></p>
-<figcaption>프롬프트 카드</figcaption>
-</figure>
-</div>
-<p><span class="qr-caption">프롬프트 카드</span></p>
-</div>
 <p><span class="story-label">완성본을 공유하는 가상 채팅 예시</span></p>
 <div class="story-chat">
 <div class="chat-bubble student">
@@ -604,7 +598,7 @@
 <div class="tile-grid three">
 <div class="tile">
 <p><span class="tile-title">초안</span></p>
-<p>무엇이 궁금한지, 누구에게 쓸지 먼저 정하기</p>
+<p>어떤 내용을 주제로 할지 먼저 정하기</p>
 </div>
 <div class="tile">
 <p><span class="tile-title">자료 정리</span></p>
