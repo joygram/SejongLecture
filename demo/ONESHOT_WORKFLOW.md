@@ -28,7 +28,7 @@
 
 ## 시각·기록 기준
 - 로고 = [공용 세롱이 SVG](../assets/serongi.svg); 결과 원고는 ../assets/serongi.svg 참조; HTML 내장
-- 제작 표기 = 표·차트 직전 40px 얼굴 + 세롱이 (실제 에이전트 / 확인한 모델명) - AI 글쓰기 도우미 by 한국 시각 작성일
+- 제작 표기 = 보고서 최상단 40px 얼굴 + 세롱이 (실제 에이전트 / 확인한 모델명) - AI 글쓰기 도우미 by 한국 시각 생성 날짜시간; 생성 줄과 합침
 - 테마 = [슬라이드 SCSS](../slides/sejong-slides.scss)의 색·[Pretendard](../slides/assets/fonts/PretendardVariable.woff2); 다크 색 정의·HTML 폰트 내장
 - 기록 = 단계 / 세롱이 / 사람; 출처의 사람이 제공 / 세롱이가 찾음 구분; 맨 아래 윤리 가이드
 

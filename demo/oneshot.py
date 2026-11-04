@@ -306,7 +306,7 @@ execute:
   warning: false
 ---
 
-<p class="report-generated-at">생성: <time datetime="''' + generated_iso + '''">''' + generated_label + '''</time></p>
+<div class="serongi report-generated-at"><img src="../assets/serongi.svg" alt="" aria-hidden="true" width="40" height="40"><span>세롱이 (''' + args.agent + " / " + args.model + ''') - AI 글쓰기 도우미 by <time datetime="''' + generated_iso + '''">''' + generated_label + '''</time></span></div>
 
 ## 질문 {#question}
 
@@ -315,8 +315,6 @@ execute:
 ''' + ("공식 자료 신규 확보에 실패해 제공된 2026년 보관본을 사용했어요." if acquisition["archive"] else "공식 페이지에서 원본 PDF를 새로 확보했어요.") + ''' 현재 게시정보·이용 조건의 확인 범위는 [출처 기록](SOURCE.md)에 남겼어요.
 
 ## 표와 두 표현 비교 {#comparison}
-
-<div class="serongi"><img src="../assets/serongi.svg" alt="" aria-hidden="true" width="40" height="40"><span>세롱이 (''' + args.agent + " / " + args.model + ") - AI 글쓰기 도우미 by " + date + '''</span></div>
 
 ''' + comparison + '''
 
