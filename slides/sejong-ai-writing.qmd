@@ -736,6 +736,8 @@ Claude Code · Codex
 **이 강의의 제작 과정도 공개해요**
 
 강사 · 청중·목적 설정, 구성·표현 수정 지시<br>AI · 초안·자료 정리, 코드·차트·디자인 구현과 자동 점검<br>확인 상태 · 강사의 내용·수치 직접 검토는 미확인 항목이 남아 있어요.
+
+자료 전체 · [github.com/joygram/SejongLecture](https://github.com/joygram/SejongLecture)
 :::
 
 ::: notes
