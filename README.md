@@ -4,7 +4,7 @@
 
 ## 구성
 - `slides/` = Quarto revealjs 슬라이드, 발표자 노트·노출 목적·판단 질문 = 로컬 워크벤치
-- `handout/prompts.html` = 학생 페이지 (QR = https://joygram.github.io/SejongLecture/handout/prompts.html, 생성 = slides/make_qr.py)
+- `handout/prompts.html` = 학생 페이지 (QR = https://joygram.github.io/SejongLecture/handout/prompts.html, 생성 = python slides/workbench.py qr, PDF = python slides/workbench.py pdf)
 - `handout/practice.md` = 학생 실습지
 - `demo/README.md` = 같은 팀 리포트를 완성·공유하는 2부 시연 대본
 - `demo/report_workflow.py` + `demo/report-story.qmd` = 기본 시연, 원자료의 분야·응시 인원만 사용

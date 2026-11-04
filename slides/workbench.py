@@ -181,6 +181,19 @@ def check():
     return int(any(v['issues'] for v in result['viewports']))
 
 
+STUDENT_URL = 'https://joygram.github.io/SejongLecture/handout/prompts.html'
+
+
+def qr():
+    import qrcode
+    import qrcode.image.svg
+    code = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
+    code.add_data(STUDENT_URL)
+    code.make(fit=True)
+    code.make_image(image_factory=qrcode.image.svg.SvgPathFillImage).save(SLIDES/'prompts-qr.svg')
+    print('prompts-qr.svg', STUDENT_URL)
+
+
 def pdf():
     from playwright.sync_api import sync_playwright
     target = SLIDES/'sejong-ai-writing.pdf'
@@ -206,12 +219,13 @@ def serve(port):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['build','check','pdf','serve'])
+    parser.add_argument('command',choices=['build','check','qr','pdf','serve'])
     parser.add_argument('--port',type=int,default=8765)
     args=parser.parse_args()
     try:
         if args.command=='build': build()
         elif args.command=='check': sys.exit(check())
+        elif args.command=='qr': qr()
         elif args.command=='pdf': pdf()
         else: serve(args.port)
     except (RuntimeError,subprocess.CalledProcessError,ImportError,OSError) as exc:
