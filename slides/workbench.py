@@ -43,6 +43,9 @@ def manifest():
         item['index'] = i
         item['key'] = hashlib.sha256(item['title'].encode()).hexdigest()[:12]
     guide = json.loads((ROOT/'demo/presenter-guide.json').read_text(encoding='utf-8'))
+    for step in guide['steps']:
+        if step.get('input_file'):
+            step['input'] = (ROOT/step['input_file']).read_text(encoding='utf-8-sig')
     revision_source = json.dumps(guide,ensure_ascii=False) + text + (SLIDES/'sejong-slides.scss').read_text(encoding='utf-8-sig') + (SLIDES/'audience-only.lua').read_text(encoding='utf-8-sig') + (SLIDES/'SLIDE_PROMPT.txt').read_text(encoding='utf-8-sig') + (SLIDES/'slide-navigation.html').read_text(encoding='utf-8-sig')
     for source_path in [ROOT/'demo/cases/d-grade7/data.csv', ROOT/'demo/report-story.qmd', ROOT/'handout/card-template.html']:
         revision_source += hashlib.sha256(source_path.read_bytes()).hexdigest()
@@ -84,12 +87,13 @@ def write_presenter_guide(guide):
     tools += ['', '## 다음 작업에 남길 것', '', '- 원자료·출처·기준일, 내가 고른 계산 기준.','- 편집 가능한 문서 원본, 공통 스타일 지침, 수정 기록.','- 실제로 확인한 문장·수치·인용과 AI 사용 고지.']
     (ROOT/'handout/tool-workflows.md').write_text('\n'.join(tools)+'\n',encoding='utf-8')
     student_cards=[]
-    for number,(title,index) in enumerate([('카드 1 · 메모를 붙여 초안을 받아요',1),('카드 2 · 아까 본 표를 붙여요',3),('카드 3 · “전문적으로”보다 “우리 뜻대로”',2),('완성 뒤 · 팀 채팅방에 공유',8)]):
+    cards = [('카드 1 · 메모로 서론 만들기',1),('카드 2 · 표·차트·문장 대조하기',3),('카드 3 · 우리 뜻으로 고쳐 완성하기',2),('완성 뒤 · 팀 채팅 초안 만들기',8)]
+    for number,(title,index) in enumerate(cards):
         step=guide['steps'][index]
         key='card-'+str(number)
         student_cards.append('<article><div class="heading"><h2>'+html.escape(title)+'</h2><button type="button" data-copy="'+key+'">복사</button></div><p class="think">'+html.escape(step['insight'])+'</p><textarea id="'+key+'" readonly aria-label="'+html.escape(title)+' 입력문">'+html.escape(step['input'])+'</textarea><p class="hint" id="'+key+'-status" aria-live="polite">읽어보고 내 글에 맞게 바꿔 입력하세요.</p></article>')
     card_text=[]
-    for title,index in [('카드 1 · 메모를 붙여 초안을 받아요',1),('카드 2 · 아까 본 표를 붙여요',3),('카드 3 · “전문적으로”보다 “우리 뜻대로”',2),('완성 뒤 · 팀 채팅방에 공유',8)]:
+    for title,index in cards:
         card_text.append('===== '+title+' =====\n'+guide['steps'][index]['input'].strip()+'\n')
     (ROOT/'handout/cards.txt').write_text('\n'.join(card_text),encoding='utf-8')
     template=(ROOT/'handout/card-template.html').read_text(encoding='utf-8-sig')
@@ -106,6 +110,25 @@ def check():
     if built['revision'] != data['revision']:
         raise RuntimeError('원본 변경 감지: 먼저 python slides/workbench.py build 실행 필요')
     result = {'revision': data['revision'], 'viewports': [], 'manual': '내용·디자인·QR 실제 스캔은 사람 검수 필요'}
+    # Verify the actual lesson data against the preserved PDF, not the generator's expectations.
+    import csv
+    import pdfplumber
+    with (ROOT/'demo/cases/d-grade7/data.csv').open(encoding='utf-8-sig') as stream:
+        recorded = list(csv.DictReader(stream))
+    original = []
+    with pdfplumber.open(ROOT/'demo/cases/d-grade7/raw.pdf') as pdf:
+        if '2026' not in pdf.pages[0].extract_text():
+            raise RuntimeError('슬라이드 원자료 연도 불일치')
+        for page in pdf.pages:
+            for table in page.extract_tables():
+                original.extend(row for row in table if row[0] and row[0] != '모집단위')
+    if len(recorded) != len(original):
+        raise RuntimeError('슬라이드 CSV와 원본 PDF의 행 개수 불일치')
+    for row, raw in zip(recorded, original):
+        values = [(v or '').replace(',', '').strip().replace('-', '') for v in raw[1:4]]
+        if row['unit'] != raw[0] or [row[k] for k in ['planned','eligible','sat']] != values:
+            raise RuntimeError('슬라이드 CSV와 원본 PDF 수치 불일치: '+row['unit'])
+    result['source_data'] = f'PDF {len(original)}행·{len(original)*3}개 수치/결측과 CSV 일치'
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
@@ -116,6 +139,22 @@ def check():
         page.evaluate("Reveal.configure({transition:'none', backgroundTransition:'none'})")
         if page.locator('aside.notes').count():
             raise RuntimeError('공개 HTML에 발표자 노트 잔존')
+        lesson_text = page.locator('.reveal .slides').text_content()
+        for term in ['세롱이', '[자료 확인 후]', '요체로', '실습과 강사 시연은']:
+            if term in lesson_text:
+                raise RuntimeError('질문을 선결론으로 바꾸거나 오래된 비유 잔존: '+term)
+        if page.locator('section.qr-entry .qr-panel').count() != 1 or page.locator('.reveal .slides .qr-panel').count() != 1:
+            raise RuntimeError('QR은 카드 설명 뒤 직접 해보기 화면에 하나만 배치해야 함')
+        if page.locator('section.qr-entry h2').inner_text() != '직접 해보기':
+            raise RuntimeError('QR 위치가 직접 해보기 화면이 아님')
+        titles = page.locator('.reveal .slides section h2').all_text_contents()
+        if titles.index('직접 해보기') <= next(i for i, title in enumerate(titles) if title.startswith('카드 3')):
+            raise RuntimeError('QR이 카드 설명보다 앞에 있음')
+        if page.locator('.reveal .slides img[src*="serongi"]').count():
+            raise RuntimeError('프레젠테이션에 세롱이 로고 잔존')
+        if page.locator('.reveal .slides .chat-avatar').count() != 6:
+            raise RuntimeError('채팅 참여자 얼굴 누락')
+        result['story'] = '프레젠테이션 AI 표기·채팅 얼굴 6개·카드 설명 뒤 QR 1개 확인'
         count = page.evaluate('Reveal.getSlides().length')
         if count != len(data['slides']):
             raise RuntimeError(f'원본·출력 장수 불일치: {len(data["slides"])} / {count}')

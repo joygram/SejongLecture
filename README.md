@@ -7,7 +7,8 @@
 - `handout/prompts.html` = 학생 페이지 (QR = https://joygram.github.io/SejongLecture/handout/prompts.html, 생성 = python slides/workbench.py qr, PDF = python slides/workbench.py pdf)
 - `handout/practice.md` = 학생 실습지
 - `demo/README.md` = 같은 팀 리포트를 완성·공유하는 2부 시연 대본
-- `demo/report_workflow.py` + `demo/report-story.qmd` = 기본 시연, 원자료의 분야·응시 인원만 사용
+- `demo/oneshot.py` = 준비된 수집·제작 코드; 강사 시연에서 사용 사실 공개, 실행 뒤 사람이 결과 검토
+- `demo/report_workflow.py` + `demo/report-story.qmd` = 보관 CSV 재편집 예제, 원샷 신규 수집과 구분
 - `demo/pipeline.py` + `demo/cases.json` = 수집 → 점검 → 사람 판정 → 시트·리포트
 - `demo/cases/<사례>/` = raw 원본, data.csv, SOURCE.md, CHECK.md, DECISIONS.md, sheet.xlsx
 
