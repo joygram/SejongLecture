@@ -1,0 +1,12 @@
+.quarto/
+*.knit.md
+.Rhistory
+
+# Local slide verification artifacts
+slides/.workbench/
+
+PLAN.md
+demo/PRESENTER_GUIDE.md
+demo/presenter-guide.json
+slides/workbench/
+sejong-oneshot-*/

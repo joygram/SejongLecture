@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<script src="sejong-ai-writing_files/libs/clipboard/clipboard.min.js"></script>
+<script src="sejong-ai-writing_files/libs/quarto-html/tabby.min.js"></script>
+<script src="sejong-ai-writing_files/libs/quarto-html/popper.min.js"></script>
+<script src="sejong-ai-writing_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="sejong-ai-writing_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="sejong-ai-writing_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="sejong-ai-writing_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
+
+  <meta name="author" content="김호성">
+  <title>AI와 함께 리포트 쓰기</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="sejong-ai-writing_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="sejong-ai-writing_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="sejong-ai-writing_files/libs/revealjs/dist/theme/quarto-7a5d4e094efe1269fcaa6238d4d0f49f.css">
+  <link href="sejong-ai-writing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="sejong-ai-writing_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <style>
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('assets/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  .reveal { font-synthesis: none; }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">AI와 함께 리포트 쓰기</h1>
+  <p class="subtitle">팀 채팅방의 첫 질문부터, 완성한 글을 공유하기까지 — 세종대학교 학과 특강</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+김호성
+</div>
+        <p class="quarto-title-affiliation">
+            한국 R사용자회 이사
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="오늘-어떤-ai를-쓰고-있나요" class="slide level2 opening-poll">
+<h2>오늘, 어떤 AI를 쓰고 있나요?</h2>
+<div class="tile-grid three">
+<div class="tile">
+<p><span class="tile-title">써본 적 있나요?</span></p>
+<p>과제나 공부에 AI 도움을 받은 적 있나요?</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">주로 뭘 쓰나요?</span></p>
+<p>ChatGPT · 제미나이 · 다른 도구</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">코딩 에이전트도?</span></p>
+<p>파일을 읽고 코드를 고쳐 실행하는 도구</p>
+</div>
+</div>
+</section>
+<section id="시작은-우리-팀-채팅방에서" class="slide level2 story-opening">
+<h2>시작은 우리 팀 채팅방에서</h2>
+<p><span class="story-label">이 강의를 따라갈 가상 팀 과제</span></p>
+<div class="story-layout">
+<div class="story-chat">
+<div class="chat-bubble student">
+<p><span class="chat-who">지민</span></p>
+<p>“우리 팀은 올해 7급 시험 현황으로 리포트 쓰자.”</p>
+</div>
+<div class="chat-bubble assistant">
+<p><span class="chat-who">나</span></p>
+<p>“좋아. 내가 자료 보고 AI랑 초안 만들어볼게.”</p>
+</div>
+<div class="chat-bubble friend">
+<p><span class="chat-who">수아</span></p>
+<p>“행정직에 사람이 많다던데, 그럼 가장 인기 있다고 써도 돼?”</p>
+</div>
+</div>
+<div class="story-art">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/writing-companion.png"></p>
+<figcaption>한 학생이 AI 동료의 도움을 받아 팀 리포트를 쓰는 장면</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="이-질문에-답하는-리포트를-만들-거예요" class="slide level2 lecture-goals">
+<h2>이 질문에 답하는 리포트를 만들 거예요</h2>
+<div class="flow-line">
+<p><span>쓸 말 정하기</span> <span>초안 만들기</span> <span>자료와 맞추기</span> <span>고쳐서 공유하기</span></p>
+</div>
+<ul>
+<li>부탁할 때는 <strong>맥락·역할·제약·예시</strong>를 구체적으로.</li>
+<li>표와 그림을 보며 <strong>무엇을 글에 담을지</strong> 고르기.</li>
+<li><strong>초안·자료 정리·퇴고</strong> 프롬프트를 직접 써보기.</li>
+</ul>
+</section>
+<section>
+<section id="부-우리-팀-리포트의-초안" class="title-slide slide level1 center">
+<h1>1부 · 우리 팀 리포트의 초안</h1>
+
+</section>
+<section id="글을-쓰다-막힐-때-ai에-맡길-일" class="slide level2">
+<h2>글을 쓰다 막힐 때, AI에 맡길 일</h2>
+<div class="tile-grid three">
+<div class="tile">
+<p><span class="tile-title">시작할 말이 없다면</span></p>
+<p>내 질문과 메모에서 첫 문장 후보 찾기</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">내용이 뒤섞였다면</span></p>
+<p>우리 팀원이 궁금한 순서대로 내용 정리하기</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">초안을 읽어보니 낯설다면</span></p>
+<p>내 뜻과 다르게 읽히는 곳 물어보기</p>
+</div>
+</div>
+</section>
+<section id="그래서-우리-팀은-무슨-말을-하려는-건가요" class="slide level2">
+<h2>그래서, 우리 팀은 무슨 말을 하려는 건가요?</h2>
+<blockquote>
+<p>올해 7급 시험에는 어떤 분야에 사람이 많이 왔을까? 팀원은 사람이 많으면 인기 있는 분야인지 궁금해한다. 자료를 보기 전부터 “인기가 높다”는 결론을 내리고 싶지는 않다.</p>
+</blockquote>
+<p><strong>우리 팀의 출발 메모</strong></p>
+<p><strong>무엇을 알아보고, 누구에게 쓸 것인가?</strong></p>
+</section>
+<section id="프롬프트-4요소-우리-팀의-부탁" class="slide level2">
+<h2>프롬프트 4요소 — 우리 팀의 부탁</h2>
+<div class="tile-grid four">
+<div class="tile">
+<p><span class="tile-title">맥락</span></p>
+<p>7급 시험 현황을 처음 읽는 팀원에게 설명할 리포트</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">역할</span></p>
+<p>우리 메모를 정리하고 빠진 점을 물어보는 편집 동료</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">제약</span></p>
+<p>확인하지 않은 사실은 넣지 않기 · 서론 5문장</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">예시</span></p>
+<p>“우리는 어떤 분야에 시험을 본 사람이 많았는지 궁금했다.”</p>
+</div>
+</div>
+<p><a href="https://arxiv.org/abs/2302.11382" class="reference-note">네 묶음은 본 강의의 실무 체크리스트 · 관련 연구: White 외(2023), arXiv 공개 원고. 네 요소의 제창 논문이 아님.</a></p>
+</section>
+<section id="리포트-써줘에서-한-걸음-더" class="slide level2">
+<h2>“리포트 써줘”에서 한 걸음 더</h2>
+<div class="before-after">
+<div class="ba-cell">
+<p><strong>처음 부탁</strong></p>
+<p>“7급 공무원 시험 리포트 써줘.”</p>
+</div>
+<div class="ba-cell">
+<p><strong>우리 팀의 부탁</strong></p>
+<p>“메모 세 줄을 살려 서론 5문장으로 정리해줘. 아직 자료를 안 줬으니 숫자는 넣지 마. 우리 생각이 모호하면 먼저 물어봐.”</p>
+</div>
+</div>
+<p><strong>두 초안에서 우리 팀의 질문은 어디에 남았나?</strong></p>
+</section>
+<section id="초안에-쓸-말-자료에서-어디까지-알-수-있나요" class="slide level2 bridge-slide">
+<h2>초안에 쓸 말, 자료에서 어디까지 알 수 있나요?</h2>
+<div class="bridge-art">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/data-to-writing.png"></p>
+<figcaption>표를 살피고 AI와 내용을 정리한 뒤 사람이 문장을 고르는 흐름</figcaption>
+</figure>
+</div>
+</div>
+<div class="tile-grid three bridge-steps">
+<div class="tile">
+<p><span class="tile-title">표를 본다</span></p>
+<p>어떤 숫자가 눈에 들어오나요?</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">그림으로 본다</span></p>
+<p>무엇을 강조하면 보는 사람의 시선이 달라지나요?</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">문장으로 쓴다</span></p>
+<p>팀원에게 무엇부터 알려줄까요?</p>
+</div>
+</div>
+</section>
+<section id="우리-질문에-필요한-건-이-두-칸이에요" class="slide level2">
+<h2>우리 질문에 필요한 건 이 두 칸이에요</h2>
+<p><strong>어느 분야에서, 몇 명이 실제로 시험을 봤나요?</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>분야</th>
+<th style="text-align: right;">시험을 본 사람</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>행정직</td>
+<td style="text-align: right;">11,447명</td>
+</tr>
+<tr class="even">
+<td>과학기술직</td>
+<td style="text-align: right;">2,871명</td>
+</tr>
+<tr class="odd">
+<td>외무영사직</td>
+<td style="text-align: right;">1,216명</td>
+</tr>
+</tbody>
+</table>
+<p><strong>응시 인원 = 실제로 시험을 본 사람 수</strong></p>
+<p><a href="../demo/cases/d-grade7/SOURCE.md" class="reference-note">자료: 인사혁신처, 2026년 국가공무원 7급 공채 1차 필기시험 응시현황 · 직군 계</a></p>
+</section>
+<section id="같은-숫자-무엇을-먼저-보여줄까요" class="slide level2 chart-check">
+<h2>같은 숫자, 무엇을 먼저 보여줄까요?</h2>
+<p><span class="story-label">같은 자료·같은 축·같은 순서, 강조하는 분야만 다른 두 표현</span></p>
+<div id="d211729c" class="cell" data-fig-height="3.1" data-fig-width="11" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="sejong-ai-writing_files/figure-revealjs/cell-4-output-1.png" width="1050" height="288"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>어디에 사람이 많은지 보여줄까, 적은 분야도 살펴보게 할까?</strong></p>
+<p>두 그림 모두 같은 사실이에요. 제목과 강조가 보는 사람의 시선을 바꿔요.</p>
+</section>
+<section id="사람이-많으면-인기-있는-직업인가요" class="slide level2">
+<h2>사람이 많으면, 인기 있는 직업인가요?</h2>
+<div class="before-after">
+<div class="ba-cell">
+<p><strong>자료에서 확인한 문장</strong></p>
+<p>“세 분야 중 행정직에서 시험을 본 사람이 가장 많았다.”</p>
+<p>표의 숫자와 막대의 길이가 같은 내용을 보여준다.</p>
+</div>
+<div class="ba-cell">
+<p><strong>우리 생각이 앞서간 문장</strong></p>
+<p>“행정직이 가장 인기 있는 직업이다.”</p>
+<p>이 표에 있는 것은 시험을 본 사람 수.</p>
+</div>
+</div>
+<p><strong>시험을 본 사람이 많다 → 직업이 인기 있다?</strong></p>
+<p>이유를 알려면, 시험을 본 사람들의 선택 배경도 들어봐야 해요.</p>
+</section>
+<section id="초안이-생겼다면-제출-전에" class="slide level2">
+<h2>초안이 생겼다면, 제출 전에</h2>
+<div class="tile-grid three ethics-choices">
+<div class="tile">
+<p><span class="tile-title">출처가 실제로 있나요?</span></p>
+<p>AI가 준 참고문헌은 직접 열어보기.</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">넣어도 되는 자료인가요?</span></p>
+<p>팀원 이름·학번·연락처 등 불필요한 개인정보 빼기.</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">우리 글이라고 설명할 수 있나요?</span></p>
+<p>수업의 AI 사용 규칙을 확인하고, 내 주장·수정 이유 남기기.</p>
+</div>
+</div>
+<p><a href="https://www.ctd.uscourts.gov/sites/default/files/Mata-v.-Avianca.pdf" class="reference-note">실제 참고 사례: 가짜 판례 제출·후속 허위 대응으로 제재된 Mata v. Avianca(2023).</a></p>
+</section>
+<section id="하지-않은-확인까지-했다고-쓰면-안-돼요" class="slide level2">
+<h2>하지 않은 확인까지 했다고 쓰면 안 돼요</h2>
+<p><strong>실제로 쓴 자료</strong></p>
+<blockquote>
+<p>인사혁신처, 「2026년 국가공무원 7급 공채 1차 필기시험 응시현황」.</p>
+</blockquote>
+<p><strong>작성 과정 기록 예시 — 실제 수행한 범위로 수정</strong></p>
+<blockquote>
+<p>AI가 초안과 표·그림을 만들었다. 우리 팀이 직접 확인한 부분: [확인한 자료와 항목] 아직 확인하지 않은 부분: [남은 항목]</p>
+</blockquote>
+<p><strong>기록할 내용: 실제로 확인한 자료 · AI가 도운 부분 · 우리 팀이 결정한 부분</strong></p>
+</section></section>
+<section>
+<section id="부-초안부터-공유까지-직접-해봐요" class="title-slide slide level1 center">
+<h1>2부 · 초안부터 공유까지, 직접 해봐요</h1>
+
+</section>
+<section id="지금부터-우리-팀이-할-일" class="slide level2 with-qr">
+<h2>지금부터 우리 팀이 할 일</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>순서</th>
+<th>남길 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>메모로 초안 쓰기</td>
+<td>서론 한 문단</td>
+</tr>
+<tr class="even">
+<td>표와 그림 확인하기</td>
+<td>확인한 숫자로 쓴 세 문장</td>
+</tr>
+<tr class="odd">
+<td>문서 원본 고치기</td>
+<td>완성 리포트</td>
+</tr>
+<tr class="even">
+<td>팀원에게 공유하기</td>
+<td>채팅방에 보낼 짧은 요약</td>
+</tr>
+</tbody>
+</table>
+<p>같은 자료로 쓴 글이 단계마다 어떻게 달라지는지 볼게요.</p>
+<div class="qr-panel">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="prompts-qr.svg" width="180"></p>
+<figcaption>프롬프트 카드</figcaption>
+</figure>
+</div>
+<p><span class="qr-caption">초안 · 자료 정리 · 퇴고</span></p>
+</div>
+</section>
+<section id="카드-1-메모를-붙여-초안을-받아요" class="slide level2">
+<h2>카드 1 · 메모를 붙여 초안을 받아요</h2>
+<blockquote>
+<p>올해 7급 시험에는 어떤 분야에 사람이 많이 왔을까? 팀원은 사람이 많으면 인기 있는 분야인지 궁금해한다. 자료를 보기 전부터 “인기가 높다”는 결론을 내리고 싶지는 않다.</p>
+</blockquote>
+<p>“우리 메모에서 하려는 말을 한 줄로 짚고, <strong>서론 5문장</strong>으로 정리해줘. 자료는 다음에 줄 테니 숫자를 만들지 말고, 빠진 점은 먼저 물어봐.”</p>
+<p><strong>선택: 살릴 문장 하나 · 바꿀 문장 하나</strong></p>
+</section>
+<section id="카드-2-아까-본-표를-붙여요" class="slide level2 data-practice">
+<h2>카드 2 · 아까 본 표를 붙여요</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>분야</th>
+<th style="text-align: right;">시험을 본 사람</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>행정직</td>
+<td style="text-align: right;">11,447명</td>
+</tr>
+<tr class="even">
+<td>과학기술직</td>
+<td style="text-align: right;">2,871명</td>
+</tr>
+<tr class="odd">
+<td>외무영사직</td>
+<td style="text-align: right;">1,216명</td>
+</tr>
+</tbody>
+</table>
+<p>“이 표만 보고 알 수 있는 것을 <strong>세 문장</strong>으로 써줘. 시험을 본 사람 수를 설명하고, ‘인기’나 ‘어려운 시험’이라는 평가는 넣지 마.”</p>
+<p><strong>확인: 문장 속 숫자와 원표의 숫자가 같은가?</strong></p>
+</section>
+<section id="카드-3-전문적으로보다-우리-뜻대로" class="slide level2">
+<h2>카드 3 · “전문적으로”보다 “우리 뜻대로”</h2>
+<div class="before-after">
+<div class="ba-cell">
+<p><strong>이렇게 부탁하면</strong></p>
+<p>“더 전문적으로 고쳐줘.”</p>
+<p>→ “공직 선호의 구조적 양상이 다각적으로 드러났다.”</p>
+</div>
+<div class="ba-cell">
+<p><strong>우리 뜻을 남기는 요청</strong></p>
+<p>“우리 팀이 왜 이 자료를 봤는지 남겨줘. 어려운 말로 바꾸지 말고, 내 뜻이 달라지는 곳만 짚어줘.”</p>
+<p>→ “어떤 분야에 시험을 본 사람이 많았는지 먼저 살펴봤다.”</p>
+</div>
+</div>
+<p><strong>이 문장에서 무엇을 고쳤고, 왜 고쳤나?</strong></p>
+</section>
+<section id="한-번의-요청으로-자료-수집부터-보고서까지" class="slide level2">
+<h2>한 번의 요청으로, 자료 수집부터 보고서까지</h2>
+<div class="flow-line">
+<p><span>새 작업 폴더</span> <span>원자료 수집</span> <span>시트와 차트</span> <span>리포트와 요약</span></p>
+</div>
+<p><strong>코딩 에이전트에게 부탁할 일</strong></p>
+<p>“새 폴더에 공식 자료를 구해서, 수정 가능한 엑셀 시트와 차트를 만들어줘. 같은 자료로 보고서와 팀 채팅 요약까지 만들고, 출처와 확인 못 한 부분도 남겨줘.”</p>
+<p><strong>남길 파일: 완성본 + 다시 고칠 원본</strong></p>
+</section>
+<section id="대화하는-ai에서-내-작업-환경으로" class="slide level2 platform-workflow">
+<h2>대화하는 AI에서, 내 작업 환경으로</h2>
+<div class="big-flow"><div class="big-flow-node"><span class="big-flow-number">01</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v13H9l-6 4zM7 8h10M7 12h7"></path></svg><strong>대화로 초안</strong><small>ChatGPT · Gemini</small><span class="big-flow-desc">질문하고 선택지 받기</span></div><div class="big-flow-node"><span class="big-flow-number">02</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="9" cy="6" r="2"></circle><circle cx="15" cy="12" r="2"></circle><circle cx="8" cy="18" r="2"></circle></svg><strong>내 기준 재사용</strong><small>Gem · 프로젝트 지침</small><span class="big-flow-desc">문체·목차·조건 남기기</span></div><div class="big-flow-node"><span class="big-flow-number">03</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zM13 7l4 4"></path></svg><strong>문서 재편집</strong><small>Docs · 편집 원본</small><span class="big-flow-desc">자료와 내 글을 연결</span></div><div class="big-flow-node"><span class="big-flow-number">04</span><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"></path></svg><strong>계산·갱신</strong><small>코딩 에이전트 · Quarto</small><span class="big-flow-desc">표·그림·본문 다시 만들기</span></div></div>
+<div class="takeaway">
+<p>내 문장·목차·자료를 남겨, <strong>다음 보고서도 고쳐 쓸 수 있게</strong>.</p>
+</div>
+<p><a href="https://support.google.com/gemini/answer/18560919?hl=ko" class="case-source">참고: Gemini 맞춤 지침</a> · <a href="https://learn.chatgpt.com/docs/projects" class="case-source">ChatGPT 프로젝트</a></p>
+</section>
+<section id="처음-질문에-답하는-리포트가-됐나요" class="slide level2">
+<h2>처음 질문에 답하는 리포트가 됐나요?</h2>
+<p><strong>2026년 7급 공채, 어느 분야에 시험을 본 사람이 많았을까?</strong></p>
+<blockquote>
+<p>자료를 펼쳤을 때 가장 먼저 눈에 들어온 것은 행정직의 응시 인원이었다. 행정직은 11,447명으로, 과학기술직 2,871명과 외무영사직 1,216명보다 많았다. 다만 사람이 더 많이 왔다는 사실만으로 직업의 인기를 말하지는 않았다.</p>
+</blockquote>
+<p><span class="story-label">수업용 리포트 예시 · 강사의 직접 검증 완료를 뜻하지 않음</span></p>
+</section>
+<section id="마지막은-같은-팀-채팅방으로" class="slide level2 team-share">
+<h2>마지막은, 같은 팀 채팅방으로</h2>
+<p><span class="story-label">완성본을 공유하는 가상 채팅 예시</span></p>
+<div class="story-chat">
+<div class="chat-bubble student">
+<p><span class="chat-who">나</span></p>
+<p>“리포트랑 그래프 고쳐서 올렸어. 세 분야 중 행정직에서 시험 본 사람이 가장 많았어.”</p>
+</div>
+<div class="chat-bubble assistant">
+<p><span class="chat-who">나</span></p>
+<p>“어디에 사람이 많은지 보여주려고 비교 그래프를 골랐어. 이 자료만으로 인기까지 알 수는 없어서, 그 결론은 넣지 않았어.”</p>
+</div>
+<div class="chat-bubble friend">
+<p><span class="chat-who">지민</span></p>
+<p>“인원이랑 인기는 다른 얘기네. 왜 그 분야를 골랐는지는 더 찾아보자.”</p>
+</div>
+</div>
+<p><strong>처음 질문에 답하고, 아직 모르는 것은 다음 질문으로 남겨요.</strong></p>
+</section>
+<section id="다음-과제에서-해볼-세-가지" class="slide level2">
+<h2>다음 과제에서 해볼 세 가지</h2>
+<div class="tile-grid three">
+<div class="tile">
+<p><span class="tile-title">초안</span></p>
+<p>무엇이 궁금한지, 누구에게 쓸지 먼저 정하기</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">자료 정리</span></p>
+<p>자료에 있는 사실과 AI가 붙인 해석 구분하기</p>
+</div>
+<div class="tile">
+<p><span class="tile-title">퇴고와 공유</span></p>
+<p>이 글을 읽은 사람이 어떤 판단을 할지 생각하기</p>
+</div>
+</div>
+<p><strong>AI가 제안한 문장 / 우리가 선택한 문장 / 직접 고친 부분</strong></p>
+</section>
+<section id="글은-ai가-썼는데-판단은-누가-한-거죠" class="slide level2 closing-slide">
+<h2>글은 AI가 썼는데, 판단은 누가 한 거죠?</h2>
+<div class="closing-message">
+<p>그럴듯한 글이 나왔다고, 내 판단까지 끝난 건 아니에요.</p>
+</div>
+<p>어떤 표현을 골랐나요? · 그 표현에 근거가 있나요? · 팀원은 어떻게 받아들일까요?</p>
+<div class="production-credit">
+<p><strong>이 강의는 AI와 이렇게 만들었어요</strong></p>
+<p>강사 · 청중과 목적 설정, 구성·표현에 대한 수정 지시<br>
+AI · 초안·자료 정리, 코드·차트·일러스트·디자인 구현, 자동 점검<br>
+확인 상태 · 강사의 데이터·내용 직접 검증은 대부분 미실시. AI 점검과 구분.</p>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="sejong-ai-writing_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="sejong-ai-writing_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":false,"openButtonLabel":"Slide menu"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: false,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+
+        maxScale: 2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+
+    (function(){
+
+      const mount=()=>{
+
+        if(!window.Reveal?.isReady())return setTimeout(mount,100);
+
+        Reveal.configure({scrollActivationWidth:0,view:'slide'});
+
+        const root=document.querySelector('.reveal');
+
+        const excluded='a,button,input,textarea,select,label,summary,video,audio,iframe,[contenteditable],[role="button"],.slide-click-nav,.controls,.slide-number,.progress,.slide-menu,.slide-menu-button,.slide-menu-overlay,.qr-panel,.speaker-notes';
+
+        let start=null;
+
+        document.addEventListener('pointerdown',e=>{start={x:e.clientX,y:e.clientY};},true);
+
+        root.addEventListener('pointerdown',e=>{if(e.shiftKey&&e.button===0&&!e.target.closest(excluded))e.preventDefault();});
+
+        root.addEventListener('click',e=>{
+
+          if(e.defaultPrevented||e.button!==0||e.target.closest(excluded)||Reveal.isOverview())return;
+
+          if(document.querySelector('.slide-menu.active'))return;
+
+          if(start&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>8)return;
+
+          if(e.shiftKey){window.getSelection()?.removeAllRanges();e.preventDefault();Reveal.prev();}
+
+          else if(!window.getSelection()?.toString())Reveal.next();
+
+        });
+
+      };
+
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+
+    })();
+
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "복사완료!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "복사완료!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+              if (!link.classList.contains('no-external-icon')) {
+              }
+            }
+          }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

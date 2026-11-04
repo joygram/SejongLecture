@@ -1,0 +1,172 @@
+---
+title: "국가기술자격 응시와 합격"
+subtitle: "공개 통계와 사람이 내린 판단"
+author: "김호성"
+date: "2026-11-05"
+lang: ko
+format:
+  html:
+    code-fold: true
+    toc: true
+    number-sections: true
+    fig-cap-location: top
+    tbl-cap-location: top
+jupyter: python3
+---
+
+```{python}
+import json
+from pathlib import Path
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Malgun Gothic"
+
+case = Path("cases/BUILDING").read_text(encoding="utf-8").strip()
+spec = json.loads(Path("cases.json").read_text(encoding="utf-8"))[case]
+seat = Path("cases") / case
+decided = json.loads((seat / "decisions.json").read_text(encoding="utf-8"))
+pick = {key: value["결정"] for key, value in decided.items()}
+source = (seat / "SOURCE.md").read_text(encoding="utf-8")
+
+FIELD = spec["field"]
+rows = pd.read_csv(seat / "data.csv")
+total = rows[rows["sex"] == "남녀합산"].copy()
+items = total[total["item"] != FIELD].copy()
+if pick["집계 단위"] == "분야 행만":
+    items = total[total["item"] == FIELD].copy()
+
+stage_base = "sat" if pick["분모"] == "응시" else "applied"
+base_word = "응시" if stage_base == "sat" else "접수"
+items["written_rate"] = items["written_passed"] / items[f"written_{stage_base}"] * 100
+items["practical_rate"] = items["practical_passed"] / items[f"practical_{stage_base}"] * 100
+items["absent"] = (1 - items["written_sat"] / items["written_applied"]) * 100
+
+last = int(items["year"].max())
+latest = items[items["year"] == last].set_index("item")
+small = latest["practical_sat"] < 500
+if pick["작은 표본"] == "제외":
+    latest = latest[~small]
+```
+## 요약 {.unnumbered}
+
+
+
+&nbsp;
+
+```{python}
+#| output: asis
+names = ", ".join(latest.index)
+print(f"{spec['title']} 공개 통계로 {items['year'].min()}–{last}년 접수·응시·합격을 정리했다. 다룬 단위는 {names}이다.")
+print(f"합격률의 분모는 {base_word} 인원이며, 이 선택을 포함한 판단은 판단 기록에 근거와 함께 남겼다.")
+```
+## 자료와 방법
+
+
+
+&nbsp;
+
+```{python}
+#| output: asis
+print(source.split("\n", 2)[2])
+print(f"- 필기 합격률 = 필기 합격 ÷ 필기 {base_word} × 100")
+print(f"- 실기 합격률 = 실기 합격 ÷ 실기 {base_word} × 100")
+print("- 결시율 = (1 − 필기 응시 ÷ 필기 접수) × 100")
+```
+## 결과
+
+
+
+&nbsp;
+
+```{python}
+#| label: tbl-latest
+#| tbl-cap: "최근 연도 단위별 응시·합격"
+view = pd.DataFrame({
+    "필기 응시": latest["written_sat"].map("{:,}".format),
+    "필기 합격률(%)": latest["written_rate"].map("{:.1f}".format),
+    "결시율(%)": latest["absent"].map("{:.1f}".format),
+    "실기 응시": latest["practical_sat"].map("{:,}".format),
+    "실기 합격률(%)": [("–" if pick["작은 표본"] == "비율 쓰지 않음" and n < 500 else f"{r:.1f}")
+                     for r, n in zip(latest["practical_rate"], latest["practical_sat"])],
+})
+view.index.name = "단위"
+view
+```
+
+```{python}
+#| label: fig-stage
+#| fig-cap: "최근 연도 필기·실기 합격률(%), 축은 0부터"
+fig, ax = plt.subplots(figsize=(8, 3.8))
+x = range(len(latest))
+ax.bar([i - 0.2 for i in x], latest["written_rate"], width=0.4, color="#17324d", label="필기")
+ax.bar([i + 0.2 for i in x], latest["practical_rate"], width=0.4, color="#b0623a", label="실기")
+ax.set_xticks(list(x), [f"{name}\n(실기 {n:,}명)" for name, n in zip(latest.index, latest["practical_sat"])])
+ax.set_ylim(0, 100)
+ax.set_ylabel("%")
+ax.legend(frameon=False)
+ax.spines[["top", "right"]].set_visible(False)
+plt.show()
+```
+
+```{python}
+#| output: asis
+if pick["가장 어려운 시험"] == "쓰지 않음":
+    print("어느 시험이 '가장 어렵다'는 문장은 쓰지 않았다. 필기와 실기 중 무엇을 기준으로 하느냐에 따라 답이 바뀌기 때문이다.")
+else:
+    column = "written_rate" if pick["가장 어려운 시험"].startswith("필기") else "practical_rate"
+    word = "필기" if column == "written_rate" else "실기"
+    hardest = latest[column].idxmin()
+    print(f"{word} 합격률 기준으로 가장 낮은 단위는 {hardest}({latest.loc[hardest, column]:.1f}%)였다.")
+```
+## 판단 기록
+
+
+
+&nbsp;
+
+```{python}
+#| output: asis
+print("| 판단할 자리 | 결정 | 근거 |")
+print("| --- | --- | --- |")
+for key, value in decided.items():
+    print(f"| {key} | {value['결정']} | {value['근거']} |")
+```
+## 자료의 한계
+
+- 실기 응시자에는 전년도 필기 합격자가 섞여 있어 필기·실기 합격률을 곱해 "최종 합격률"을 만들 수 없다
+- 같은 사람이 한 해에 여러 번 응시하면 각각 센다
+- 남자 행이 없어, 남자 수치가 필요하면 남녀합산에서 여자를 빼서 만들어야 한다
+- 실기 합격과 자격 취득 인원이 다른 행이 있다 (`CHECK.md`)
+
+
+
+&nbsp;
+
+```{python}
+#| output: asis
+if pick["성별"] != "쓰지 않음":
+    women = rows[(rows["sex"] == "여자") & (rows["item"].isin(latest.index)) & (rows["year"] == last)].set_index("item")
+    both = latest[["practical_sat", "practical_passed"]]
+    men = both - women[["practical_sat", "practical_passed"]]
+    print("\n## 성별 실기 합격률 (남자 = 남녀합산 − 여자)\n")
+    print("| 단위 | 여자(%) | 남자(%) |")
+    print("| --- | --- | --- |")
+    for name in latest.index:
+        w = women.loc[name, "practical_passed"] / women.loc[name, "practical_sat"] * 100 if women.loc[name, "practical_sat"] else float("nan")
+        m = men.loc[name, "practical_passed"] / men.loc[name, "practical_sat"] * 100 if men.loc[name, "practical_sat"] else float("nan")
+        print(f"| {name} | {w:.1f} | {m:.1f} |")
+    print("\n이 자료에는 응시자의 전공·경력·응시 횟수가 없어 차이의 원인은 알 수 없다.")
+```
+## 재현 정보 {.unnumbered}
+
+
+
+&nbsp;
+
+```{python}
+#| output: asis
+print(f"- 다시 만들기: `python pipeline.py fetch {case}` → `inspect` → `DECISIONS.md` 작성 → `build`")
+print("- 글쓰기 보조: 생성형 AI로 판단할 자리를 찾고 문장을 다듬었으며, 판단은 위 기록대로 사람이 내렸다")
+```
