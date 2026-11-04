@@ -1,0 +1,25 @@
+{
+  "d-grade7": {
+    "kind": "exam",
+    "title": "국가공무원 7급 공채 1차 필기 응시현황 (2026)",
+    "dataset": "15060880"
+  },
+  "a-it-engineer": {
+    "kind": "certs",
+    "title": "국가기술자격 기사 · 정보기술분야",
+    "dataset": "3072668",
+    "field": "정보기술분야"
+  },
+  "b-cook-craftsman": {
+    "kind": "certs",
+    "title": "국가기술자격 기능사 · 조리분야",
+    "dataset": "3072670",
+    "field": "조리분야"
+  },
+  "c-it-professional": {
+    "kind": "certs",
+    "title": "국가기술자격 기술사 · 정보기술분야",
+    "dataset": "3072666",
+    "field": "정보기술분야"
+  }
+}

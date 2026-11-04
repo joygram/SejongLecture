@@ -1,0 +1,339 @@
+<title>코딩 에이전트 심화</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root {
+  --bg: #f6f3fa;
+  --paper: #ffffff;
+  --ink: #241f2e;
+  --muted: #6b6478;
+  --line: #ddd6e8;
+  --accent: #6a3fb5;
+  --accent-soft: #ece4f8;
+  --prompt-bg: #faf8fd;
+  --warn: #9a4b16;
+  --display: "Gowun Batang", "Noto Serif KR", serif;
+  --body: "IBM Plex Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --mono: "IBM Plex Mono", "D2Coding", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17141d; --paper: #211d29; --ink: #ece8f3; --muted: #a59eb3;
+    --line: #3a3447; --accent: #b99cf0; --accent-soft: #2e2640; --prompt-bg: #1b1823; --warn: #e3a172;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17141d; --paper: #211d29; --ink: #ece8f3; --muted: #a59eb3;
+  --line: #3a3447; --accent: #b99cf0; --accent-soft: #2e2640; --prompt-bg: #1b1823; --warn: #e3a172;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 680px; margin: 0 auto; padding-block: 28px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 20px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-size: 13px; letter-spacing: 0.06em; color: var(--muted); }
+h1 { font-family: var(--display); font-size: 28px; line-height: 1.3; margin: 0; text-wrap: balance; }
+.lead { margin: 0; color: var(--muted); }
+.lead a, .note a { color: var(--accent); }
+nav { display: flex; flex-wrap: wrap; gap: 8px; }
+nav a { font-size: 14px; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 4px 12px; text-decoration: none; }
+section { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 14px; min-width: 0; scroll-margin-top: 12px; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+h2 { font-size: 19px; margin: 0; }
+.where { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.todo { margin: 0; font-size: 15px; }
+.prompt { display: grid; gap: 8px; min-width: 0; }
+.label { font-size: 14px; font-weight: 600; }
+.label small { font-weight: 400; color: var(--muted); }
+pre { margin: 0; background: var(--prompt-bg); border: 1px dashed var(--line); border-radius: 10px; padding: 12px 14px; white-space: pre-wrap; word-break: keep-all; overflow-wrap: anywhere; font-family: var(--body); font-size: 15px; }
+pre.table { font-family: var(--mono); font-size: 14px; }
+button { justify-self: start; font: 600 14px var(--body); color: var(--accent); background: var(--accent-soft); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.done { color: var(--paper); background: var(--accent); }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.note.warn { color: var(--warn); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 14px; min-width: 520px; width: 100%; }
+th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+ol.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; font-size: 15px; }
+footer { font-family: var(--display); font-size: 20px; text-align: center; padding-top: 8px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">세종대 특강 · 심화 · 집에서</span>
+    <h1>코딩 에이전트로 공개 통계 리포트 만들기</h1>
+    <p class="lead">강의 중에는 기본 페이지만 쓰면 됩니다. 이 페이지는 집에서 직접 해 볼 때 씁니다. 기본 페이지: <a href="https://claude.ai/artifact/MyncFAonpNues9iMcqdUJJ">프롬프트 카드 3종</a></p>
+  </header>
+
+  <nav aria-label="목차">
+    <a href="#start">1 시작하기</a>
+    <a href="#agents">2 AGENTS.md</a>
+    <a href="#chat">채팅 AI에서는</a>
+    <a href="#guide">3 프롬프트 가이드</a>
+    <a href="#steps">4 막혔을 때</a>
+    <a href="#extend">5 내 자료로 확장</a>
+  </nav>
+
+  <section id="start">
+    <div class="head"><h2>1 · 시작하기</h2><span class="where">10분</span></div>
+    <ol class="steps">
+      <li><b>작업 폴더를 하나 정합니다.</b> 빈 새 폴더가 좋습니다. 에이전트는 이 폴더 안에서만 일합니다.</li>
+      <li><b>그 폴더 맨 위에 AGENTS.md를 만듭니다.</b> 어떤 도구를 쓰든 같습니다. 아래 2번 내용을 붙여넣고 저장합니다.</li>
+      <li><b>쓰는 도구가 AGENTS.md를 바로 읽지 않으면 연결 파일 한 줄을 둡니다.</b> 아래 표를 보세요.</li>
+      <li>에이전트에게 "AGENTS.md대로 진행해"라고 입력합니다. 수집·점검까지 하고 멈춥니다.</li>
+      <li>DECISIONS.md를 내가 채우고 "진행해"라고 하면 시트와 리포트가 나옵니다.</li>
+    </ol>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>AGENTS.md 만드는 방법</th><th>하는 법</th></tr></thead>
+        <tbody>
+          <tr><td>VS Code</td><td>파일 → 폴더 열기로 작업 폴더 열기 → 탐색기에서 새 파일 → 이름 <code>AGENTS.md</code> → 붙여넣기 → 저장</td></tr>
+          <tr><td>메모장·텍스트 편집기</td><td>붙여넣기 → 작업 폴더에 <code>AGENTS.md</code>로 저장 (Windows는 파일 형식 "모든 파일"로, .txt가 붙지 않게)</td></tr>
+          <tr><td>에이전트에게 시키기</td><td>"아래 내용을 이 폴더의 AGENTS.md로 그대로 저장해" + 내용 붙여넣기</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>도구</th><th>AGENTS.md 읽기</th><th>더 할 일</th></tr></thead>
+        <tbody>
+          <tr><td>VS Code GitHub Copilot 에이전트</td><td>바로 읽음</td><td>없음</td></tr>
+          <tr><td>Cursor</td><td>바로 읽음</td><td>없음</td></tr>
+          <tr><td>OpenAI Codex</td><td>바로 읽음</td><td>없음</td></tr>
+          <tr><td>Claude Code (터미널·VS Code 확장)</td><td>CLAUDE.md를 읽음</td><td>같은 폴더에 <code>CLAUDE.md</code>를 만들고 <code>@AGENTS.md</code> 한 줄</td></tr>
+          <tr><td>Gemini CLI</td><td>GEMINI.md를 읽음</td><td>같은 폴더에 <code>GEMINI.md</code>를 만들고 "AGENTS.md를 읽고 그 규칙을 따른다" 한 줄</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">확인 방법: 에이전트에게 "지금 따르는 규칙 파일과 '멈출 자리'를 말해 줘"라고 물어보세요. AGENTS.md의 멈출 자리를 그대로 말하면 연결된 것입니다. 도구 버전마다 읽는 파일이 바뀔 수 있어 2026년 11월 기준으로 정리했습니다.</p>
+    <div class="prompt">
+      <span class="label">Claude Code를 쓸 때 터미널 <small>Node.js 필요 (nodejs.org). 다른 도구는 그 도구에서 작업 폴더를 엽니다</small></span>
+      <pre class="table">npm install -g @anthropic-ai/claude-code
+mkdir data-writing
+cd data-writing
+claude</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">에이전트 창에 처음 한 번 <small>AGENTS.md를 직접 저장하기 어렵다면</small></span>
+      <pre>아래 내용을 이 작업 폴더 맨 위에 AGENTS.md로 그대로 저장해 줘. 네가 AGENTS.md를 자동으로 읽지 않는 도구라면, 네가 읽는 규칙 파일(예: CLAUDE.md, GEMINI.md)을 같은 폴더에 만들고 AGENTS.md를 따르라는 한 줄만 써. 저장한 뒤 어떤 파일을 만들었는지 보여 주고, AGENTS.md대로 A부터 C까지 진행하고 멈춰.
+
+[여기에 2번 AGENTS.md 내용 붙여넣기]</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">DECISIONS.md를 채운 뒤</span>
+      <pre>DECISIONS.md 다 채웠어. AGENTS.md의 D 단계 진행해.</pre>
+      <button type="button">복사</button>
+    </div>
+    <p class="note">왜 AGENTS.md인가: 지켜야 할 규칙을 채팅이 아니라 작업 폴더의 파일에 두면, 대화가 길어지거나 도구를 바꿔도 에이전트가 매번 다시 읽습니다. 내 판단 기준이 파일로 남습니다.</p>
+  </section>
+
+  <section id="agents">
+    <div class="head"><h2>2 · AGENTS.md</h2><span class="where">폴더에 저장</span></div>
+    <p class="todo">다른 질문·자료로 바꿀 때는 "과제" 절만 고칩니다.</p>
+    <div class="prompt">
+      <pre class="table"># 데이터 글쓰기 실습 — 에이전트 규칙
+
+이 폴더에서 일하는 코딩 에이전트는 아래를 항상 지킨다.
+
+## 과제
+- 질문: 2026년 국가공무원 7급 공채 1차 필기의 직군별·모집단위별 경쟁 규모는 어떠한가
+- 자료: 공공데이터포털 「인사혁신처_국가공무원 7급 공채 1차 필기시험 응시현황 통계」
+- 지표: 경쟁률 = 응시 ÷ 선발예정 (분모는 DECISIONS.md의 결정을 따른다)
+- 다른 질문·자료로 바꿀 때는 이 절만 고친다
+
+## 항상 지킬 것
+- 숫자를 지어내지 않는다. 자료에서 확인하지 못한 값은 멈추고 알린다
+- 원본은 raw/에 손대지 않고 그대로 둔다
+- 쉼표만 지운다. '-'·빈칸·기호는 0으로 바꾸지 않고 원문 값을 따로 열에 남긴다
+- 평가("인기", "선호", "어렵다")와 원인 추측을 쓰지 않는다. 숫자에 보이는 것만 쓴다
+- 그래프 축은 0부터, 단위를 표시한다
+- 리포트 본문 숫자는 인라인 코드로 계산한다. 손으로 친 숫자는 없다
+- 단계마다 실행한 명령과 결과를 짧게 보여 준다
+
+## 작업 순서
+- A 환경: node·npm·python·pip·quarto 확인. python이나 quarto가 없으면 설치 방법을 알리고 멈춘다
+- A 환경: pandas·matplotlib·openpyxl·pdfplumber·jupyter 설치, matplotlib 한글 글꼴 지정
+- B 수집: 자료를 내려받아 raw/에 저장. CSV는 그대로, PDF는 pdfplumber, HWPX는 압축을 풀어 표를 꺼내 data.csv로
+- B 수집: 합계·소계 행을 아래 행들의 합과 대조해 결과를 보인다. 다르면 멈춘다
+- B 수집: 자료 이름·기관·주소·기준일·조회 날짜·꺼낸 방법을 SOURCE.md에 적는다
+- C 점검: 판단이 필요한 자리를 CHECK.md에 표로 적는다 (판단할 자리 / 데이터에서 보인 숫자 / 사람이 답할 질문)
+- C 점검: 최소한 분모, '-' 칸, 합계 행과 이중 집계, 구분모집, 아주 작은 단위, "가장 ○○한" 같은 표현을 본다
+- C 점검: DECISIONS.md에 항목마다 선택지와 빈 "결정 =", "근거 =" 칸을 만든다
+- D 리포트: 사람이 "진행해"라고 할 때만 시작한다
+- D 리포트: DECISIONS.md에 빈 칸이 있으면 그 항목만 알리고 멈춘다
+- D 리포트: 결정대로 수식이 들어간 sheet.xlsx와 report.qmd → report.html을 만든다
+- D 리포트: 구성 = 요약, 질문, 자료와 방법, 결과(표·그림 번호와 캡션), 판단 기록, 자료의 한계, 재현 정보
+- D 리포트: 마지막에 리포트 숫자를 data.csv로 다시 계산해 대조한 표를 보인다
+
+## 멈출 자리
+- C를 마치면 멈추고 사람에게 DECISIONS.md를 채우라고 말한다
+- 분모·포함 범위·빈칸 해석·표현은 에이전트가 정하지 않는다. 기본값도 넣지 않는다
+- 파일을 지우거나 폴더 밖을 건드려야 하면 먼저 묻는다
+
+## 기록
+- 출처 = SOURCE.md, 판단할 자리 = CHECK.md, 사람의 결정과 근거 = DECISIONS.md
+- 리포트 끝에 AI 사용 사실을 밝힌다</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">CLAUDE.md <small>Claude Code를 쓸 때만</small></span>
+      <pre class="table">@AGENTS.md</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">GEMINI.md <small>Gemini CLI를 쓸 때만</small></span>
+      <pre class="table">이 폴더의 AGENTS.md를 먼저 읽고 그 규칙을 그대로 따른다.</pre>
+      <button type="button">복사</button>
+    </div>
+  </section>
+
+  <section id="chat">
+    <div class="head"><h2>채팅 AI에서는 · ChatGPT · 제미나이</h2><span class="where">폴더 대신 지침 칸</span></div>
+    <p class="todo">채팅 AI에는 작업 폴더가 없습니다. AGENTS.md 대신 <b>매번 자동으로 적용되는 지침 칸</b>에 같은 규칙을 넣고, 자료 파일은 첨부합니다.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>쓰는 곳</th><th>규칙을 넣는 자리</th><th>자료를 넣는 자리</th></tr></thead>
+        <tbody>
+          <tr><td>ChatGPT · 프로젝트</td><td>프로젝트 만들기 → 프로젝트 지침</td><td>프로젝트 파일에 CSV·PDF 추가</td></tr>
+          <tr><td>ChatGPT · 일반 채팅</td><td>설정 → 맞춤 설정(사용자 지정 지침). 모든 대화에 적용되므로 과제가 끝나면 지움</td><td>채팅에 파일 첨부</td></tr>
+          <tr><td>제미나이 · Gem이 보이는 계정</td><td>Gems → 새 Gem → 지침</td><td>Gem의 지식 파일 또는 채팅 첨부</td></tr>
+          <tr><td>제미나이 · 스킬이 보이는 계정</td><td>맞춤설정 → 스킬 → 만들기 → 설명·지침</td><td>채팅 첨부</td></tr>
+          <tr><td>메뉴를 못 찾을 때</td><td>새 채팅 첫 메시지에 아래 규칙을 붙여넣기</td><td>같은 메시지에 첨부</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prompt">
+      <span class="label">채팅용 규칙 <small>AGENTS.md를 채팅에 맞게 줄인 것</small></span>
+      <pre>너는 내 수업 리포트를 돕는 데이터 편집 동료다. 이 대화(프로젝트)에서 항상 아래를 지킨다.
+- 내가 첨부하거나 붙여넣은 자료만 쓴다. 자료에서 확인하지 못한 숫자는 [확인 필요]로 둔다.
+- 계산은 코드를 실행해서 하고, 계산식과 결과 표를 함께 보여 준다.
+- '-'·빈칸은 0으로 바꾸지 않는다. 합계 행이 있으면 아래 행들의 합과 대조해 보여 준다.
+- 분모·포함 범위·빈칸 해석·표현처럼 판단이 필요한 자리는 선택지만 표로 보여 주고 멈춘다. 내가 정하기 전에는 대신 정하지 않는다.
+- "인기", "선호", "어렵다" 같은 평가와 원인 추측은 쓰지 않는다. 숫자에 보이는 것만 쓴다.
+- 그래프는 축을 0부터, 단위를 표시한다.
+- 답 끝에 "이 답에서 자료에 없는 숫자" 목록을 붙인다. 없으면 "없음".</pre>
+      <button type="button">복사</button>
+    </div>
+    <p class="note">채팅 AI는 내 PC 폴더에 파일을 저장하지 못합니다. 결과 표·그림·리포트 파일은 직접 내려받아 원본과 한 곳에 보관하세요. 메뉴 이름과 제공 여부는 계정·학교 설정에 따라 다르며, 2026년 11월 공식 도움말 기준입니다. 자세한 설정 순서는 강의 자료의 도구별 가이드에 있습니다.</p>
+  </section>
+
+  <section id="guide">
+    <div class="head"><h2>3 · 코딩 에이전트 프롬프트 가이드</h2><span class="where">원칙</span></div>
+    <p class="todo">코딩 에이전트는 내 폴더에서 파일을 만들고 명령을 실행합니다. 무엇을 만들지보다 <b>어디서 멈추고 무엇을 확인할지</b>를 먼저 적습니다. AGENTS.md가 바로 이 원칙대로 쓰여 있습니다.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>원칙</th><th>쓰는 말</th></tr></thead>
+        <tbody>
+          <tr><td>목표와 완료 조건</td><td>"report.html까지, 숫자 대조표를 보여 주면 끝"</td></tr>
+          <tr><td>입력·출력 파일</td><td>"raw/에 원본, data.csv, SOURCE.md, report.qmd"</td></tr>
+          <tr><td>멈출 자리</td><td>"판단은 하지 말고 DECISIONS.md를 만든 뒤 멈춰"</td></tr>
+          <tr><td>금지</td><td>"'-'를 0으로 바꾸지 마", "숫자를 지어내지 마"</td></tr>
+          <tr><td>실패할 때</td><td>"내려받지 못하면 숫자를 만들지 말고 멈춰"</td></tr>
+          <tr><td>검증과 기록</td><td>"합계 대조·재계산 대조를 표로", "출처는 SOURCE.md"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prompt">
+      <span class="label">진행 중에 쓰는 짧은 지시</span>
+      <pre class="table">지금까지 바꾼 파일과 이유를 목록으로 보여 줘.
+방금 숫자는 어느 파일 몇 번째 줄에서 나왔어?
+그 판단은 네가 하지 말고 선택지만 DECISIONS.md에 적어.
+여기서 멈추고, 실행하지 말고 계획만 보여 줘.
+같은 명령을 다시 돌려서 결과가 똑같은지 확인해 줘.</pre>
+      <button type="button">복사</button>
+    </div>
+    <p class="note warn">실습은 빈 새 폴더에서 하고, 명령 실행을 허락하기 전에 무엇을 하려는지 읽어 보세요.</p>
+  </section>
+
+  <section id="steps">
+    <div class="head"><h2>4 · 막혔을 때 한 단계씩</h2><span class="where">대체 경로</span></div>
+    <div class="prompt">
+      <span class="label">환경만 다시</span>
+      <pre>python, pip, quarto 버전을 확인하고 pandas, matplotlib, openpyxl, pdfplumber, jupyter를 설치해 줘. 한글 글꼴을 정하고, 한글 제목이 있는 막대그래프 하나로 hello.qmd를 만들어 quarto render까지 해 줘. 결과를 항목 / 버전 / 상태 표로 보여 줘.</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">수집·점검만 다시</span>
+      <pre>AGENTS.md의 B와 C만 다시 해 줘. 이미 있는 raw/ 원본은 다시 받지 말고 그대로 써.</pre>
+      <button type="button">복사</button>
+    </div>
+    <div class="prompt">
+      <span class="label">판정을 바꿔 다시</span>
+      <pre>DECISIONS.md의 경쟁률 분모를 "응시대상인원"으로 바꿨어. D 단계만 다시 해서 바뀐 숫자와 문장을 이전과 나란히 보여 줘.</pre>
+      <button type="button">복사</button>
+    </div>
+  </section>
+
+  <section id="extend">
+    <div class="head"><h2>5 · 내 질문, 내 자료로 확장</h2><span class="where">과제·리포트에</span></div>
+    <ol class="steps">
+      <li><b>질문 한 줄</b>: 무엇을 누구와 비교해 무엇을 알고 싶은가</li>
+      <li><b>자료 고르기</b>: 아래 다섯 가지 확인</li>
+      <li><b>AGENTS.md의 "과제" 절만 바꾸기</b>: 질문 · 자료 · 지표</li>
+      <li><b>판정은 직접</b>: 근거 한 줄이 리포트의 책임</li>
+    </ol>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>자료 고르기</th><th>확인할 것</th></tr></thead>
+        <tbody>
+          <tr><td>누가 냈나</td><td>정부·공공기관 공식 통계인가</td></tr>
+          <tr><td>언제 기준인가</td><td>기준일·조회일, 최신판인가</td></tr>
+          <tr><td>어떤 형식인가</td><td>CSV는 바로, PDF·HWPX는 꺼내고 합계로 대조</td></tr>
+          <tr><td>분자와 분모</td><td>비율을 계산할 두 숫자가 함께 있나</td></tr>
+          <tr><td>내가 말할 수 있나</td><td>내 전공·수업에서 판단할 수 있는 주제인가</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>어떤 자료든 판단할 자리</th><th>스스로 던질 질문</th></tr></thead>
+        <tbody>
+          <tr><td>분모</td><td>신청·접수·응시·심사완료 중 무엇이 내 질문에 맞나</td></tr>
+          <tr><td>합계·소계 행</td><td>함께 더하면 두 번 세지 않나</td></tr>
+          <tr><td>빈칸·'-'·기호</td><td>0인가, 미공개인가, 해당 없음인가</td></tr>
+          <tr><td>묶기와 나누기</td><td>제도가 일부러 나눠 둔 구분인가</td></tr>
+          <tr><td>작은 수</td><td>몇 명 차이로 비율이 흔들리지 않나, 개인이 드러나지 않나</td></tr>
+          <tr><td>시점</td><td>서로 다른 해의 사람이 섞이지 않나</td></tr>
+          <tr><td>자료 간 차이</td><td>같은 숫자가 다른 공식 자료에서 다르게 나오지 않나</td></tr>
+          <tr><td>표현</td><td>"가장", "인기", "어렵다"가 숫자에 있나</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">바로 해 볼 수 있는 공개 자료: 인사혁신처 국가공무원 공채 응시·합격 통계(PDF·HWPX), 한국산업인력공단 직무분야별 기사·기능사·기술사 자격통계현황(CSV). 공공데이터포털에서 "인사혁신처 공채", "자격통계현황"으로 찾습니다.</p>
+  </section>
+
+  <footer>자료 먼저, 숫자는 계산 결과에서, 판단은 사람이</footer>
+</div>
+
+<script>
+document.querySelectorAll(".prompt").forEach(function (box) {
+  var button = box.querySelector("button");
+  var text = box.querySelector("pre");
+  if (!button) return;
+  button.addEventListener("click", function () {
+    function mark() {
+      button.textContent = "복사됨";
+      button.classList.add("done");
+      setTimeout(function () { button.textContent = "복사"; button.classList.remove("done"); }, 1600);
+    }
+    function selectText() {
+      var range = document.createRange();
+      range.selectNodeContents(text);
+      var picked = window.getSelection();
+      picked.removeAllRanges();
+      picked.addRange(range);
+      button.textContent = "선택됨 · 길게 눌러 복사";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text.textContent).then(mark, selectText);
+    } else {
+      selectText();
+    }
+  });
+});
+</script>

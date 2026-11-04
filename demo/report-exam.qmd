@@ -1,0 +1,165 @@
+---
+title: "2026년 국가공무원 7급 공채 1차 필기 응시 현황"
+subtitle: "공문서 표에서 꺼낸 숫자와 사람이 내린 판단"
+author: "김호성"
+date: "2026-11-05"
+lang: ko
+format:
+  html:
+    code-fold: true
+    toc: true
+    number-sections: true
+    fig-cap-location: top
+    tbl-cap-location: top
+jupyter: python3
+---
+
+```{python}
+import json
+from pathlib import Path
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Malgun Gothic"
+
+case = Path("cases/BUILDING").read_text(encoding="utf-8").strip()
+seat = Path("cases") / case
+decided = json.loads((seat / "decisions.json").read_text(encoding="utf-8"))
+pick = {key: value["결정"] for key, value in decided.items()}
+source = (seat / "SOURCE.md").read_text(encoding="utf-8")
+
+rows = pd.read_csv(seat / "data.csv")
+total = rows[rows["level"] == "총계"].iloc[0]
+units = rows[rows["level"] == "모집단위"].copy()
+
+if pick["'-' 칸"] == "0으로 읽음":
+    units[["eligible", "sat"]] = units[["eligible", "sat"]].fillna(0)
+units = units.dropna(subset=["eligible", "sat"])
+
+if pick["구분모집"] == "일반만":
+    units = units[units["track"] == "일반"]
+elif pick["구분모집"] == "합쳐서":
+    units["unit"] = units["unit"].str.replace(r":?(일반|장애인)\)", ")", regex=True).str.replace("직(", "(", regex=False)
+    units = units.groupby(["group", "unit"], as_index=False)[["planned", "eligible", "sat"]].sum()
+
+base = "sat" if pick["경쟁률 분모"] == "응시인원" else "eligible"
+base_word = "응시" if base == "sat" else "응시대상"
+units["ratio"] = units[base] / units["planned"]
+units["absent"] = (1 - units["sat"] / units["eligible"]) * 100
+small = units["planned"] <= 2
+ranked = units if pick["선발 1–2명 단위"] == "경쟁률 표시" else units[~small]
+shown = units if pick["선발 1–2명 단위"] != "쓰지 않음" else units[~small]
+
+groups = rows[rows["level"] == "직군 계"].copy()
+groups["ratio"] = groups[base] / groups["planned"]
+overall = total[base] / total["planned"]
+absent_total = (1 - total["sat"] / total["eligible"]) * 100
+top = ranked.sort_values("ratio", ascending=False).iloc[0]
+```
+
+## 요약 {.unnumbered}
+
+인사혁신처가 공개한 2026년 7급 공채 1차 필기 응시현황(PDF)에서 표를 꺼내, 선발예정 `{python} f"{total['planned']:,.0f}"`명에 대한 경쟁 규모를 정리했다.
+응시대상 `{python} f"{total['eligible']:,.0f}"`명 가운데 `{python} f"{total['sat']:,.0f}"`명이 응시해 결시율은 `{python} f"{absent_total:.1f}"`%였다.
+`{python} base_word` 기준 전체 경쟁률은 `{python} f"{overall:.1f}"`:1이다.
+경쟁률의 분모, '-' 칸 해석, 구분모집 처리 같은 판단은 사람이 내렸고 판단 기록에 근거를 남겼다.
+
+## 연구 질문
+
+- 2026년 7급 공채 1차 필기의 직군별·모집단위별 경쟁 규모는 어떠한가
+- 경쟁률을 계산하는 방식에 따라 무엇이 달라지는가
+
+## 자료와 방법
+
+- 출처: 공공데이터포털 「인사혁신처_국가공무원 7급 공채 1차 필기시험 응시현황 통계_20260803」 (PDF)
+- 수집: `pipeline.py fetch` → PDF 표 추출 → `data.csv`. 원문 표기와 '-'는 그대로 보존
+- 추출 검증: 직군 계와 총계를 모집단위 합과 대조 (`CHECK.md`)
+- 경쟁률 = `{python} base_word`인원 ÷ 선발예정인원
+- 결시율 = (1 − 응시인원 ÷ 응시대상인원) × 100
+
+## 결과
+
+### 직군별
+
+```{python}
+#| label: tbl-groups
+#| tbl-cap: "직군별 선발예정·응시대상·응시와 경쟁률"
+view = groups.assign(
+    직군=groups["group"],
+    선발예정=groups["planned"].map("{:,.0f}".format),
+    응시대상=groups["eligible"].map("{:,.0f}".format),
+    응시=groups["sat"].map("{:,.0f}".format),
+    경쟁률=groups["ratio"].map("{:.1f}:1".format),
+)[["직군", "선발예정", "응시대상", "응시", "경쟁률"]]
+view.style.hide(axis="index")
+```
+
+### 모집단위별
+
+```{python}
+#| label: fig-units
+#| fig-cap: "모집단위별 경쟁률 상위 12 (선발 1–2명 단위는 판단 기록에 따름)"
+best = ranked.sort_values("ratio", ascending=False).head(12).iloc[::-1]
+fig, ax = plt.subplots(figsize=(8, 4.6))
+ax.barh([f"{u} (선발 {p:.0f})" for u, p in zip(best["unit"], best["planned"])], best["ratio"], color="#17324d")
+for i, value in enumerate(best["ratio"]):
+    ax.annotate(f"{value:.1f}", (value, i), textcoords="offset points", xytext=(4, -4), fontsize=9)
+ax.set_xlim(0, best["ratio"].max() * 1.15)
+ax.set_xlabel(f"경쟁률 ({base_word} ÷ 선발예정)")
+ax.spines[["top", "right"]].set_visible(False)
+plt.show()
+```
+
+```{python}
+#| output: asis
+if pick["'경쟁이 가장 센 직렬'"] == "쓴다":
+    print(f"{base_word} 기준으로 경쟁률이 가장 높은 모집단위는 {top['unit']}({top['ratio']:.1f}:1)였다.")
+else:
+    print("어느 직렬의 경쟁이 '가장 세다'는 문장은 쓰지 않았다. 분모와 선발 규모에 따라 순위가 바뀌기 때문이다.")
+```
+
+### 분모를 바꾸면
+
+```{python}
+#| label: tbl-denominator
+#| tbl-cap: "같은 모집단위, 두 가지 경쟁률"
+compare = shown.assign(
+    응시대상기준=(shown["eligible"] / shown["planned"]),
+    응시기준=(shown["sat"] / shown["planned"]),
+).sort_values("응시대상기준", ascending=False).head(8)
+compare.assign(
+    모집단위=compare["unit"],
+    선발=compare["planned"].map("{:.0f}".format),
+    응시대상기준=compare["응시대상기준"].map("{:.1f}:1".format),
+    응시기준=compare["응시기준"].map("{:.1f}:1".format),
+    결시율=compare["absent"].map("{:.1f}%".format),
+)[["모집단위", "선발", "응시대상기준", "응시기준", "결시율"]].style.hide(axis="index")
+```
+
+## 판단 기록
+
+```{python}
+#| output: asis
+print("| 판단할 자리 | 결정 | 근거 |")
+print("| --- | --- | --- |")
+for key, value in decided.items():
+    print(f"| {key} | {value['결정']} | {value['근거']} |")
+```
+
+## 자료의 한계
+
+- 1차 필기 응시 현황이라 합격·최종 선발 결과는 이 자료에 없다
+- 원문 표의 '-'가 0명인지 미공개인지 자료에 설명이 없다
+- 같은 직렬이 '공업'과 '공업직'으로 다르게 적혀 있다
+- 한 사람이 다른 시험에 함께 응시했는지는 알 수 없다
+
+## 재현 정보 {.unnumbered}
+
+```{python}
+#| output: asis
+print(source.split("\n", 2)[2])
+```
+
+- 다시 만들기: `python pipeline.py fetch {case}` → `inspect` → `DECISIONS.md` 작성 → `build`
+- 글쓰기 보조: 생성형 AI로 판단할 자리를 찾고 문장을 다듬었으며, 판단은 위 기록대로 사람이 내렸다
