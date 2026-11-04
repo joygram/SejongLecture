@@ -181,6 +181,21 @@ def check():
     return int(any(v['issues'] for v in result['viewports']))
 
 
+def pdf():
+    from playwright.sync_api import sync_playwright
+    target = SLIDES/'sejong-ai-writing.pdf'
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.goto(OUTPUT.as_uri()+'?print-pdf')
+        page.wait_for_function('window.Reveal && Reveal.isReady()')
+        page.evaluate('document.fonts.ready')
+        page.wait_for_load_state('networkidle')
+        page.pdf(path=str(target), prefer_css_page_size=True, print_background=True)
+        browser.close()
+    print(target.name)
+
+
 def serve(port):
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
     print(f'워크벤치: http://127.0.0.1:{port}/slides/workbench/', flush=True)
@@ -191,12 +206,13 @@ def serve(port):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['build','check','serve'])
+    parser.add_argument('command',choices=['build','check','pdf','serve'])
     parser.add_argument('--port',type=int,default=8765)
     args=parser.parse_args()
     try:
         if args.command=='build': build()
         elif args.command=='check': sys.exit(check())
+        elif args.command=='pdf': pdf()
         else: serve(args.port)
     except (RuntimeError,subprocess.CalledProcessError,ImportError,OSError) as exc:
         print(str(exc),file=sys.stderr);sys.exit(1)
