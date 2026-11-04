@@ -10,3 +10,5 @@ demo/PRESENTER_GUIDE.md
 demo/presenter-guide.json
 slides/workbench/
 sejong-oneshot-*/
+__pycache__/
+demo/cases/BUILDING
