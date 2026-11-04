@@ -300,6 +300,12 @@ format:
     theme: [cosmo, report.scss]
     embed-resources: true
     toc: true
+    toc-title: "목차"
+    toc-expand: false
+    include-after-body:
+      text: |
+        <style>#TOC .toc-fold{cursor:pointer;display:flex;align-items:center;gap:.4em;user-select:none}#TOC .toc-fold::after{content:"▾";transition:transform .2s}#TOC.toc-folded .toc-fold::after{transform:rotate(-90deg)}#TOC.toc-folded>ul{display:none}</style>
+        <script>document.querySelectorAll("#TOC").forEach(function(n){var t=n.querySelector("h2");if(!t)return;t.classList.add("toc-fold");t.setAttribute("role","button");t.setAttribute("tabindex","0");t.setAttribute("aria-expanded","true");function f(){var c=n.classList.toggle("toc-folded");t.setAttribute("aria-expanded",String(!c));}t.addEventListener("click",f);t.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();f();}});});</script>
 jupyter: python3
 execute:
   echo: false
