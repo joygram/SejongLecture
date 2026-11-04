@@ -230,7 +230,11 @@ def documents(folder, args, rows, groups, total, title, acquisition, evidence):
     font = TTFont(font_path)
     font.flavor = None
     font.save(folder / "figures/Pretendard.ttf")
-    date = datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+    generated_at = datetime.now(ZoneInfo("Asia/Seoul"))
+    date = generated_at.date().isoformat()
+    generated_label = generated_at.strftime("%Y-%m-%d %H:%M:%S KST (한국 시각)")
+    generated_iso = generated_at.isoformat(timespec="seconds")
+    save(folder, "generation.json", json.dumps({"generated_at": generated_iso, "timezone": "Asia/Seoul", "label": generated_label}, ensure_ascii=False, indent=2))
     sources = [["사람이 제공", "공식 게시 페이지", PORTAL, date, "접속 확인" if acquisition["page_verified"] else "신규 확보 실패; 게시정보·이용 조건 미확인"],
                ["사람이 제공" if acquisition["archive"] else "세롱이가 찾음", title, "raw/raw.pdf", date, "보관본 사용; 신규 다운로드 아님" if acquisition["archive"] else "신규 다운로드 사용"],
                ["세롱이가 찾음", "PDF 다운로드 주소", acquisition["download"] or "미확보", date, "사용" if acquisition["download"] else "사용 안 함"],
@@ -260,14 +264,27 @@ a {color:var(--accent);} table {font-size:.9rem;width:100%;} .serongi {display:f
     next_steps = '''## 초안 다음, 우리가 할 일 {#next-steps}
 
 - [ ] 확인해요 → [원본 PDF](raw/raw.pdf)·[정리 데이터](data.csv)의 숫자·빈칸을 대조하고 [엑셀](report.xlsx)의 차트 화면을 열어요. [출처 기록](SOURCE.md)·[공식 페이지](''' + PORTAL + ''')의 게시정보·이용 조건과 [논문](''' + PAPER + ''') 본문을 확인해요. [점검 기록](CHECK.md)의 미확인 항목을 갱신해요.
-- [ ] 판단해요 → [인기 기준 절](report.html#popularity)과 [원고](report.qmd)를 보고 인기 사용 여부·기준·차트 A/B·미확인 처리 방침을 아래 결정란에 적어요.
-- [ ] 우리 글로 수정해요 → [질문 절](report.html#question)·[원고](report.qmd)에 팀의 관심을 담은 첫 문장을 쓰고, 수정 문장과 이유를 아래에 기록해요.
-- [ ] 다시 만들고 대조해요 → [실행 안내](README.md)·[생성 코드](scripts/oneshot.py)를 지정해 세롱이에게 수정을 요청하고, [보고서](report.html#comparison)·[엑셀](report.xlsx)을 원본과 재대조해요.
+    - 나오는 것 = 아래 [우리 기록](#our-record)의 확인 칸에 확인한 것·남은 것
+- [ ] 판단해요 → [인기 기준 절](report.html#popularity)과 [원고](report.qmd)를 보고 인기 사용 여부·기준·차트 A/B·미확인 처리 방침을 정해요.
+    - 나오는 것 = [우리 기록](#our-record)의 결정 칸
+- [ ] 우리 글로 수정해요 → [질문 절](report.html#question)·[원고](report.qmd)에 팀의 관심을 담은 첫 문장을 써요.
+    - 나오는 것 = [우리 기록](#our-record)의 수정 칸, [재대조 결과](RECHECK.md)의 AI 초안 대비 바뀐 문장
+- [ ] 다시 만들고 대조해요 → [실행 안내](README.md)대로 `python scripts/oneshot.py --recheck .`를 실행하거나 세롱이에게 요청해요. [생성 코드](scripts/oneshot.py)가 원본을 다시 추출해 [보고서](report.html#comparison)·[엑셀](report.xlsx)과 대조해요.
+    - 나오는 것 = 새 [보고서](report.html)와 [재대조 결과](RECHECK.md): 숫자 대조·바뀐 문장·단계 체크·남은 미확인
 - [ ] 공유해요 → [채팅 초안](team-chat.txt)을 고치고 [작성 과정](report.html#process)의 사람 확인자·날짜를 원고에서 갱신해요. 결과 폴더 구조를 유지하고 실제 공유 주소를 확인한 뒤 사람이 승인·직접 전송해요. HTML만 공유하면 별도 파일 링크는 열리지 않아요.
+    - 나오는 것 = [우리 기록](#our-record)의 승인·공유 주소 칸, 확정한 [채팅 초안](team-chat.txt)
 
-결정: 사람 미확인 / 수정 문장·이유: 사람 미확인 / 확인자·날짜: 사람 미확인 / 실제 공유 주소: 미확인(로컬 경로가 아니에요).
+### 우리 기록 {#our-record}
+
+- 확인: 사람 미확인
+- 결정: 사람 미확인
+- 수정 문장·이유: 사람 미확인
+- 승인자·날짜: 사람 미확인
+- 실제 공유 주소: 미확인(로컬 경로가 아니에요)
 '''
     save(folder, "NEXT_STEPS.md", next_steps)
+    (folder / "drafts").mkdir(exist_ok=True)
+    save(folder, "RECHECK.md", "# 재대조 결과\n\n- 상태 = 아직 재대조 안 함\n- 실행 = `python scripts/oneshot.py --recheck .`\n- 나오는 것 = 숫자 재대조·AI 초안 대비 바뀐 문장·단계 체크 상태·남은 미확인\n")
     rank = {r[0]: i + 1 for i, r in enumerate(sorted(groups, key=lambda r: r[5] / r[3], reverse=True))}
     comparison = md_table(["분야", "실제 시험 본 사람 수 (명)"], [[r[0].removesuffix(" 계"), f"{r[5]:,}"] for r in groups])
     popularity = md_table(["분야", "응시인원 순위", "선발 (명)", "응시 (명)", "선발 1명당 응시 (명)", "비율 순위"], [[r[0].removesuffix(" 계"), i + 1, r[3], f"{r[5]:,}", f"{r[5]/r[3]:.2f}", rank[r[0]]] for i, r in enumerate(groups)])
@@ -289,6 +306,8 @@ execute:
   warning: false
 ---
 
+<p class="report-generated-at">생성: <time datetime="''' + generated_iso + '''">''' + generated_label + '''</time></p>
+
 ## 질문 {#question}
 
 어느 분야에 실제 시험을 본 사람이 많았고, 이것을 인기라고 설명해도 될까요? 접수와 실제 응시를 구분해 살펴봐요.
@@ -297,7 +316,7 @@ execute:
 
 ## 표와 두 표현 비교 {#comparison}
 
-<div class="serongi"><img src="../assets/serongi.svg" alt="세롱이 얼굴" width="40" height="40"><span>세롱이 (''' + args.agent + " / " + args.model + ") - AI 글쓰기 도우미 by " + date + '''</span></div>
+<div class="serongi"><img src="../assets/serongi.svg" alt="" aria-hidden="true" width="40" height="40"><span>세롱이 (''' + args.agent + " / " + args.model + ") - AI 글쓰기 도우미 by " + date + '''</span></div>
 
 ''' + comparison + '''
 
@@ -337,9 +356,9 @@ A는 가장 큰 인원 규모, B는 상대적으로 작은 분야에 시선이 �
 
 ## 작성 과정 기록 {#process}
 
-|단계|세롱이|사람|
+|단계|<img src="../assets/serongi.svg" alt="" aria-hidden="true" width="40" height="40" style="vertical-align:middle"> 세롱이|사람|
 |---|---|---|
-|함께 쓴 도우미|세롱이 / ''' + args.agent + " / " + args.model + '''예요|확인자·날짜 미확인이에요|
+|함께 쓴 도우미|[표·차트 위 제작 표기](#comparison)를 참고해요|확인자·날짜 미확인이에요|
 |수집|원본 연도·제목과 사용 경로를 기록했어요|게시정보·이용 조건 미확인이에요|
 |정리|원본을 새로 추출하고 표·독립 텍스트·합계를 대조했어요|숫자 직접 대조 미확인이에요|
 |제작·검증|엑셀 정의·HTML·내장 자산·링크를 점검해요. 결과는 CHECK.md에 남겨요|엑셀 화면 미확인이에요|
@@ -359,7 +378,9 @@ A는 가장 큰 인원 규모, B는 상대적으로 작은 분야에 시선이 �
 '''
     save(folder, "report.qmd", qmd)
     save(folder, "team-chat.txt", conclusion + "\n원본·엑셀 화면·이용 조건과 미확인 항목을 함께 확인해요.\n표현을 고친 뒤 사람이 승인·직접 공유해요.\n사람이 확인한 실제 공유 주소: [미확인]\n")
-    save(folder, "README.md", "# 재실행\n\n- 환경 = Python·pdfplumber·openpyxl·matplotlib·fonttools·brotli·requests·beautifulsoup4·jupyter·Quarto 사전 준비\n- 원본 추출·엑셀·AI 초안 재생성 = `python scripts/oneshot.py --rebuild .`; 사람 수정본 별도 보존 필요\n- 사람 수정 원고만 렌더 = `quarto render report.qmd`\n- 생성 코드는 원래 프로젝트 assets·slides 경로 필요; HTML은 폰트·로고·PNG 내장\n- 별도 파일 링크 = 결과 폴더 구조 유지; 실제 공유 주소는 사람이 확인\n- 다음 행동 = [NEXT_STEPS.md](NEXT_STEPS.md); 검증 = [CHECK.md](CHECK.md)\n")
+    for name in ["report.qmd", "team-chat.txt"]:
+        shutil.copy2(folder / name, folder / "drafts" / name)
+    save(folder, "README.md", "# 재실행\n\n- 환경 = Python·pdfplumber·openpyxl·matplotlib·fonttools·brotli·requests·beautifulsoup4·jupyter·Quarto 사전 준비\n- 원본 추출·엑셀·AI 초안 재생성 = `python scripts/oneshot.py --rebuild .`; 사람 수정본 별도 보존 필요\n- 사람 수정 후 재렌더·재대조 = `python scripts/oneshot.py --recheck .` → [RECHECK.md](RECHECK.md)\n- AI 초안 보관 = [drafts/](drafts/); 재대조의 바뀐 문장 비교 기준\n- 사람 수정 원고만 렌더 = `quarto render report.qmd`\n- 생성 코드는 원래 프로젝트 assets·slides 경로 필요; HTML은 폰트·로고·PNG 내장\n- 별도 파일 링크 = 결과 폴더 구조 유지; 실제 공유 주소는 사람이 확인\n- 다음 행동 = [NEXT_STEPS.md](NEXT_STEPS.md); 검증 = [CHECK.md](CHECK.md)\n")
 
 
 def verify(folder, rows, groups):
@@ -382,7 +403,14 @@ def verify(folder, rows, groups):
         require([book["정리데이터"].cell(i, j).value for j in range(1, 11)] == row, "엑셀 원본 추출값 불일치")
     html = (folder / "report.html").read_text(encoding="utf-8")
     soup = BeautifulSoup(html, "html.parser")
+    generation = json.loads((folder / "generation.json").read_text(encoding="utf-8"))
+    timestamp = soup.select_one(".report-generated-at time")
+    require(timestamp is not None and timestamp.get("datetime") == generation["generated_at"] and timestamp.get_text(strip=True) == generation["label"], "보고서 생성 날짜시간 표시 불일치")
+    require(datetime.fromisoformat(generation["generated_at"]).utcoffset().total_seconds() == 9 * 3600, "생성 시각 한국 시간대 오류")
     require("data:font/woff2;base64," in unquote(html), "폰트 내장 누락")
+    require(len(soup.select(".serongi")) == 1, "도우미 제작 표기는 한 곳만 허용")
+    require(len(soup.select(".serongi img[alt=\"\"][aria-hidden=\"true\"]")) == 1, "도우미 얼굴 대체 텍스트 중복")
+    require(soup.get_text().count("AI 글쓰기 도우미 by") == 1, "도우미 제작 문구 중복")
     require(any(i.get("src", "").startswith("data:image/svg+xml") for i in soup.select(".serongi img")), "로고 내장 누락")
     require(any(i.get("src", "").startswith("data:image/png") for i in soup.select("img")), "PNG 내장 누락")
     for link in soup.select("a[href]"):
@@ -395,7 +423,7 @@ def verify(folder, rows, groups):
         require(target.exists(), "로컬 링크 누락: " + str(target))
         if url.fragment:
             require(BeautifulSoup(target.read_text(encoding="utf-8"), "html.parser").find(id=url.fragment) is not None, "링크 절 누락")
-    return [f"원본 {len(rows)}행·{len(rows)*3}개 수치/결측을 표 추출/독립 텍스트로 대조", "직군 계·모집단위·총계 합계 확인; 결측 유지", "엑셀 5시트·편집 가능 차트 2개 재열기; 참조·수치·축·정렬·강조색 확인", "Quarto 실제 렌더·폰트/로고/PNG 내장·HTML 전체 로컬 링크/앵커 확인"]
+    return [f"원본 {len(rows)}행·{len(rows)*3}개 수치/결측을 표 추출/독립 텍스트로 대조", "직군 계·모집단위·총계 합계 확인; 결측 유지", "엑셀 5시트·편집 가능 차트 2개 재열기; 참조·수치·축·정렬·강조색 확인", "Quarto 실제 렌더·폰트/로고/PNG 내장·HTML 전체 로컬 링크/앵커 확인", "생성 날짜시간·한국 시각(UTC+09:00)·generation.json/HTML 일치 확인"]
 
 
 def worker(args, folder):
@@ -466,6 +494,66 @@ def worker(args, folder):
     save(folder, "timing.json", json.dumps({"worker_seconds": round(time.perf_counter() - started, 3), "stages": stages, "status": "complete"}, ensure_ascii=False, indent=2))
 
 
+def changed_lines(before_path, after_path):
+    import difflib
+    if not before_path.exists():
+        return ["AI 초안 보관본 없음 → 비교 불가"]
+    before = before_path.read_text(encoding="utf-8").splitlines()
+    after = after_path.read_text(encoding="utf-8").splitlines()
+    lines = [line for line in difflib.unified_diff(before, after, lineterm="", n=0) if line[:1] in "+-" and line[:3] not in ("+++", "---")]
+    return [("AI 초안: " if line[0] == "-" else "우리 글: ") + line[1:].strip() for line in lines if line[1:].strip()][:40] or ["바뀐 문장 없음"]
+
+
+def step_state(folder):
+    text = (folder / "NEXT_STEPS.md").read_text(encoding="utf-8")
+    steps = [(mark.lower() == "x", name) for mark, name in re.findall(r"^- \[( |x|X)\] (\S+)", text, re.M)]
+    records = re.findall(r"^- (확인|결정|수정 문장·이유|승인자·날짜|실제 공유 주소): (.*)$", text, re.M)
+    return steps, records
+
+
+def recheck(folder):
+    before_csv = (folder / "data.csv").read_bytes()
+    results = []
+    try:
+        rows, groups, total, title = extract(folder)
+        same_csv = (folder / "data.csv").read_bytes() == before_csv
+        if not same_csv:
+            (folder / "data.csv").write_bytes(before_csv)
+        results.append(("원본 재추출·합계", "통과", f"{len(rows)}행·직군 {len(groups)}개·총계 응시 {total[5]:,}명"))
+        results.append(("data.csv ↔ 원본", "통과" if same_csv else "불일치", "재추출값과 같음" if same_csv else "사람 수정 또는 손상; 원래 파일 유지"))
+    except Exception as exc:
+        rows = groups = None
+        results.append(("원본 재추출·합계", "실패", str(exc)))
+    quarto = shutil.which("quarto") or "C:/Program Files/Quarto/bin/quarto.exe"
+    rendered = subprocess.run([quarto, "render", "report.qmd"], cwd=folder, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    results.append(("Quarto 재렌더", "통과" if rendered.returncode == 0 else "실패", "report.html 새로 생성" if rendered.returncode == 0 else rendered.stderr.strip().splitlines()[-1:]))
+    if rows and rendered.returncode == 0:
+        try:
+            verify(folder, rows, groups)
+            results.append(("엑셀·HTML·링크", "통과", "차트 정의·내장 자산·로컬 링크·앵커 확인"))
+        except Exception as exc:
+            results.append(("엑셀·HTML·링크", "실패", str(exc)))
+        html_text = (folder / "report.html").read_text(encoding="utf-8")
+        missing = [r[0].removesuffix(" 계") for r in groups if f"{r[5]:,}" not in html_text]
+        results.append(("보고서 숫자 ↔ 원본", "통과" if not missing else "불일치", "직군별 응시인원 모두 표기" if not missing else "누락: " + ", ".join(missing)))
+        results.append(("우리 글 절 포함", "통과" if 'id="next-steps"' in html_text else "실패", "초안 다음, 우리가 할 일 절 존재 확인"))
+    steps, records = step_state(folder)
+    pending = [name for done, name in steps if not done] + [key for key, value in records if "미확인" in value]
+    lines = ["# 재대조 결과", "", "- 실행 = " + datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S KST"), "- 대상 = [보고서](report.html)·[엑셀](report.xlsx)·[정리 데이터](data.csv)·[원본 PDF](raw/raw.pdf)", "", "## 숫자·렌더 재대조", "", "|점검|결과|내용|", "|---|---|---|"]
+    lines += [f"|{name}|{status}|{detail if isinstance(detail, str) else ' '.join(detail)}|" for name, status, detail in results]
+    lines += ["", "## 단계 체크", "", "|단계|상태|", "|---|---|"] + [f"|{name}|{'완료 표시' if done else '미완료'}|" for done, name in steps]
+    lines += ["", "## 우리 기록", ""] + [f"- {key}: {value}" for key, value in records]
+    lines += ["", "## 바뀐 문장 — 원고", ""] + ["- " + line for line in changed_lines(folder / "drafts/report.qmd", folder / "report.qmd")]
+    lines += ["", "## 바뀐 문장 — 채팅 초안", ""] + ["- " + line for line in changed_lines(folder / "drafts/team-chat.txt", folder / "team-chat.txt")]
+    lines += ["", "## 남은 미확인", ""] + (["- " + p for p in pending] or ["- 없음 → 사람 승인 후 직접 공유"])
+    lines += ["", "- 세롱이 점검만 기록함; 사람 확인·승인 대행 안 함", ""]
+    save(folder, "RECHECK.md", "\n".join(lines))
+    for name, status, _ in results:
+        print(f"{status}: {name}")
+    print(f"단계 {sum(d for d, _ in steps)}/{len(steps)} 완료 표시 · 남은 미확인 {len(pending)}개\n결과: {folder / 'RECHECK.md'}")
+    require(all(status == "통과" for _, status, _ in results), "재대조 불일치 있음; RECHECK.md 확인")
+
+
 def main():
     global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
@@ -475,6 +563,7 @@ def main():
     parser.add_argument("--evidence", help="Live browser-tool evidence JSON; never a processed data table")
     parser.add_argument("--started-at", help="UTC ISO time at receipt of the user's request; includes agent preparation")
     parser.add_argument("--rebuild", help="Re-extract preserved original; regenerates the AI draft")
+    parser.add_argument("--recheck", help="Re-render the human-edited report and write RECHECK.md")
     parser.add_argument("--worker", help=argparse.SUPPRESS)
     parser.add_argument("--worker-budget", type=float, default=240, help=argparse.SUPPRESS)
     args = parser.parse_args()
@@ -487,6 +576,9 @@ def main():
         for name in ["assets/serongi.svg", "slides/assets/fonts/PretendardVariable.woff2", "demo/cases/d-grade7/raw.pdf", "demo/cases/d-grade7/SOURCE.md"]:
             require((ROOT / name).exists(), "필수 원본/자산 없음: " + name)
         print("사전 환경 확인 통과: Python 의존성·Quarto·원본 PDF·공용 로고·Pretendard")
+        return
+    if args.recheck:
+        recheck(Path(args.recheck).resolve())
         return
     if args.rebuild:
         folder = Path(args.rebuild).resolve()
