@@ -84,7 +84,7 @@ def write_presenter_guide(guide):
     tools += ['', '## 다음 작업에 남길 것', '', '- 원자료·출처·기준일, 내가 고른 계산 기준.','- 편집 가능한 문서 원본, 공통 스타일 지침, 수정 기록.','- 실제로 확인한 문장·수치·인용과 AI 사용 고지.']
     (ROOT/'handout/tool-workflows.md').write_text('\n'.join(tools)+'\n',encoding='utf-8')
     student_cards=[]
-    for number,(title,index) in enumerate([('카드 1 · 우리 메모로 초안 쓰기',1),('카드 2 · 표에서 세 문장으로',3),('카드 3 · 우리 뜻에 맞게 퇴고',5),('완성 뒤 · 팀 채팅방에 공유',8)]):
+    for number,(title,index) in enumerate([('카드 1 · 우리 메모로 서론 받기',1),('카드 2 · 우리 말이 아닌 문장 고치기',2),('카드 3 · 표에서 세 문장으로',3),('카드 4 · 같은 자료, 그림 두 장',4),('카드 5 · 완성본 만들기',5),('카드 6 · 팀 채팅방에 요약',8)]):
         step=guide['steps'][index]
         key='card-'+str(number)
         student_cards.append('<article><div class="heading"><h2>'+html.escape(title)+'</h2><button type="button" data-copy="'+key+'">복사</button></div><p class="think">'+html.escape(step['insight'])+'</p><textarea id="'+key+'" readonly aria-label="'+html.escape(title)+' 입력문">'+html.escape(step['input'])+'</textarea><p class="hint" id="'+key+'-status" aria-live="polite">읽어보고 내 글에 맞게 바꿔 입력하세요.</p></article>')
