@@ -205,11 +205,17 @@ def draw(folder):
     with (folder / "data.csv").open(encoding="utf-8-sig") as stream:
         groups = sorted([r for r in csv.DictReader(stream) if r["행 구분"] == "직군 계"], key=lambda r: int(r["응시인원"]), reverse=True)
     font = FontProperties(fname=str(folder / "figures/Pretendard.ttf"))
-    figure, axes = plt.subplots(2, 1, figsize=(10, 7.5), layout="constrained", facecolor="#" + PAPER_COLOR)
+    from matplotlib.patches import FancyBboxPatch
+    figure = plt.figure(figsize=(10, 8.4), layout="constrained", facecolor="#" + PAPER_COLOR)
+    figure.get_layout_engine().set(h_pad=.25, w_pad=.25)
+    panels = figure.subfigures(2, 1, hspace=.08)
     maximum = math.ceil(max(int(r["응시인원"]) for r in groups) / 3000) * 3000
-    for ax, tag, highlight in zip(axes, ["A", "B"], [0, len(groups) - 1]):
+    for panel, tag, highlight in zip(panels, ["A", "B"], [0, len(groups) - 1]):
+        panel.set_facecolor("none")
+        panel.patches.append(FancyBboxPatch((.01, .02), .98, .96, boxstyle="round,pad=0,rounding_size=.035", transform=panel.transSubfigure, facecolor="#FFFFFF", edgecolor="#" + MUTED, linewidth=1.2, zorder=-1))
+        ax = panel.subplots()
         values = [int(r["응시인원"]) for r in groups]
-        ax.set_facecolor("#" + PAPER_COLOR)
+        ax.set_facecolor("none")
         ax.barh(range(len(groups)), values, color=["#" + (ACCENT if i == highlight else MUTED) for i in range(len(groups))], height=.55)
         ax.set_yticks(range(len(groups)), [r["분야"].removesuffix(" 계") for r in groups], fontproperties=font)
         ax.invert_yaxis()
@@ -222,8 +228,10 @@ def draw(folder):
             label.set_fontproperties(font)
         for i, value in enumerate(values):
             ax.text(value + maximum * .012 if value < maximum * .85 else value - maximum * .012, i, f"{value:,}", ha="left" if value < maximum * .85 else "right", va="center", fontproperties=font)
-        ax.spines[["top", "right", "left"]].set_visible(False)
-        ax.grid(axis="x", alpha=.15)
+        ax.spines[:].set_visible(False)
+        ax.tick_params(length=0, colors="#" + INK, pad=6)
+        ax.xaxis.label.set_color("#" + INK)
+        ax.grid(axis="x", color="#" + MUTED, alpha=.45, linewidth=.8)
         ax.set_axisbelow(True)
     figure.savefig(folder / "figures/comparison.png", dpi=140)
     return figure
