@@ -36,7 +36,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="sejong-ai-writing_files/libs/revealjs/dist/theme/quarto-d73d423c252df3cb8b400732b79ec210.css">
+  <link rel="stylesheet" href="sejong-ai-writing_files/libs/revealjs/dist/theme/quarto-fb0794b3c9e7d714d000b3478cb43a47.css">
   <link href="sejong-ai-writing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="sejong-ai-writing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -256,23 +256,7 @@
 </section>
 <section id="보고서-써줘에-무엇을-더할까요" class="slide level2 paper-notes">
 <h2>“보고서 써줘”에 무엇을 더할까요?</h2>
-<div class="before-after">
-<div class="ba-cell">
-<p><strong>짧은 요청</strong></p>
-<p>“2026년 7급 공채 현황으로 보고서의 서론을 써줘.”</p>
-</div>
-<div class="ba-cell">
-<p><strong>우리 팀의 요청</strong></p>
-<p>“너의 역할은 일반 독자를 위한 보고서 작성 도우미다. 아래 메모를 바탕으로 주제를 소개하는 서론 한 문단을 작성하라.”</p>
-</div>
-</div>
-<p><strong>결과에 질문·독자·우리 메모가 남아 있나요?</strong></p>
-<div class="prompt-basis">
-<p>근거 · 역할 문장은 AI의 행동과 어조를 용도에 맞게 좁혀요 (<a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Anthropic 프롬프트 가이드</a>). 역할만으로 정답형 질문의 정확도가 오르지는 않았어요 (<a href="https://arxiv.org/abs/2311.10054">Zheng 외</a>). 그래서 독자·자료·분량을 함께 적어요.</p>
-</div>
-</section>
-<section id="ai에-줄-작업-지침을-네-가지로-정해요" class="slide level2">
-<h2>AI에 줄 작업 지침을 네 가지로 정해요</h2>
+<p><span class="short-request">짧은 요청 · “2026년 7급 공채 현황으로 보고서의 서론을 써줘.” → 우리 팀은 네 칸을 더해요</span></p>
 <div class="tile-grid four">
 <div class="tile">
 <p><span class="tile-title">맥락 · 누구에게 왜</span></p>
@@ -284,14 +268,17 @@
 </div>
 <div class="tile">
 <p><span class="tile-title">제약 · 지킬 조건</span></p>
-<p>메모의 관심사를 유지하고, 주제와 목적이 드러나는 서론 한 문단을 작성하라.</p>
+<p>아래 메모만 바탕으로, 주제와 목적이 드러나는 서론 한 문단을 작성하라.</p>
 </div>
 <div class="tile">
 <p><span class="tile-title">예시 · 원하는 문장</span></p>
 <p>“올해 7급 공채에서는 어떤 분야에 관심이 모였을까?”</p>
 </div>
 </div>
-<p><span class="reference-note">이 네 묶음은 이번 강의에서 쓰는 실무 체크리스트예요.</span></p>
+<p><strong>결과에 질문·독자·우리 메모가 남아 있나요?</strong></p>
+<div class="prompt-basis">
+<p>근거 · 개발사 가이드도 같은 네 칸으로 나눠요 (<a href="https://platform.openai.com/docs/guides/prompt-engineering">OpenAI</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Anthropic</a>). 역할 한 줄만으로는 정확도가 오르지 않았어요 (<a href="https://arxiv.org/abs/2311.10054">Zheng 외</a>).</p>
+</div>
 </section>
 <section id="표차트를-본문에서-어떻게-소개할까요" class="slide level2 evidence-intro">
 <h2>표·차트를 본문에서 어떻게 소개할까요?</h2>
@@ -352,7 +339,7 @@
 <section id="같은-숫자도-먼저-보이는-것은-달라요" class="slide level2 chart-check">
 <h2>같은 숫자도, 먼저 보이는 것은 달라요</h2>
 <p><span class="story-label">숫자·축·순서·단위는 같고, 제목과 강조만 달라요</span></p>
-<div id="eb1238c4" class="cell" data-fig-height="3.2" data-fig-width="11" data-execution_count="3">
+<div id="c7747ff3" class="cell" data-fig-height="3.2" data-fig-width="11" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>

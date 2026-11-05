@@ -211,34 +211,7 @@ Claude Code · Codex로 파일을 만들거나 고쳐 봤나요?
 
 ## “보고서 써줘”에 무엇을 더할까요? {.paper-notes}
 
-:::: {.before-after}
-::: {.ba-cell}
-**짧은 요청**
-
-“2026년 7급 공채 현황으로 보고서의 서론을 써줘.”
-:::
-::: {.ba-cell}
-**우리 팀의 요청**
-
-“너의 역할은 일반 독자를 위한 보고서 작성 도우미다. 아래 메모를 바탕으로 주제를 소개하는 서론 한 문단을 작성하라.”
-:::
-::::
-
-**결과에 질문·독자·우리 메모가 남아 있나요?**
-
-::: {.prompt-basis}
-근거 · 역할 문장은 AI의 행동과 어조를 용도에 맞게 좁혀요 ([Anthropic 프롬프트 가이드](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)). 역할만으로 정답형 질문의 정확도가 오르지는 않았어요 ([Zheng 외](https://arxiv.org/abs/2311.10054)). 그래서 독자·자료·분량을 함께 적어요.
-:::
-
-::: notes
-보여주는 이유: 좋은 요청을 만능 주문으로 제시하지 않고 필요한 맥락을 확인
-생각할 질문: 빠진 조건을 하나만 보탠다면 무엇일까요?
-12–16′. 예시 요청이며 실제 AI 응답 비교는 2부에서 수행. 두 답의 좋고 나쁨을 미리 판정하지 않음.
-근거: 시스템 칸 = 개발자 지시 우선 (OpenAI Instruction Hierarchy arXiv 2404.13208, Model Spec 2025-02-12). 역할 = 행동·어조 범위 고정 (Anthropic 가이드). 페르소나 = 사실형 2,410문항 정확도 개선 없음 (Zheng 외 arXiv 2311.10054).
-:::
-
-
-## AI에 줄 작업 지침을 네 가지로 정해요
+[짧은 요청 · “2026년 7급 공채 현황으로 보고서의 서론을 써줘.” → 우리 팀은 네 칸을 더해요]{.short-request}
 
 :::: {.tile-grid .four}
 
@@ -257,7 +230,7 @@ Claude Code · Codex로 파일을 만들거나 고쳐 봤나요?
 ::: {.tile}
 [제약 · 지킬 조건]{.tile-title}
 
-메모의 관심사를 유지하고, 주제와 목적이 드러나는 서론 한 문단을 작성하라.
+아래 메모만 바탕으로, 주제와 목적이 드러나는 서론 한 문단을 작성하라.
 :::
 
 ::: {.tile}
@@ -267,12 +240,19 @@ Claude Code · Codex로 파일을 만들거나 고쳐 봤나요?
 :::
 ::::
 
-[이 네 묶음은 이번 강의에서 쓰는 실무 체크리스트예요.]{.reference-note}
+**결과에 질문·독자·우리 메모가 남아 있나요?**
+
+::: {.prompt-basis}
+근거 · 개발사 가이드도 같은 네 칸으로 나눠요 ([OpenAI](https://platform.openai.com/docs/guides/prompt-engineering) · [Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)). 역할 한 줄만으로는 정확도가 오르지 않았어요 ([Zheng 외](https://arxiv.org/abs/2311.10054)).
+:::
 
 ::: notes
-보여주는 이유: 요청의 네 요소를 실제 한 요청에 연결
-생각할 질문: 우리 요청에서 빠진 조건은 무엇인가요?
-16–20′. 학술 표준·특정 연구자의 네 요소 이론으로 귀속하지 않음. 역할만 바꾸면 결과가 좋아진다고 보장하지 않음.
+보여주는 이유: 짧은 요청에 빠진 맥락을 네 칸으로 채워 한 요청으로 연결
+생각할 질문: 우리 요청에서 빠진 칸은 무엇인가요?
+12–20′. 예시 요청, 실제 AI 응답 비교는 2부. 두 답의 좋고 나쁨 미리 판정 안 함. 역할만으로 결과 개선 보장 안 함.
+근거: OpenAI 개발자 메시지 = Identity·Instructions·Examples·Context. Anthropic = role·clear and direct·examples·context.
+근거: 시스템 칸 = 개발자 지시 우선 (Instruction Hierarchy arXiv 2404.13208, Model Spec 2025-02-12).
+근거: 페르소나 = 사실형 2,410문항 정확도 개선 없음 (Zheng 외 arXiv 2311.10054).
 :::
 
 
