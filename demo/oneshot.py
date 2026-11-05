@@ -22,6 +22,12 @@ ROOT = Path(__file__).resolve().parent.parent
 PORTAL = "https://www.data.go.kr/data/15060880/fileData.do"
 PRESS = "https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?boardId=bbs_0000000000000029&cntId=4263&mode=view"
 PAPER = "https://dcollection.korea.ac.kr/srch/srchDetail/000000068482"
+DISPLAY_REFS = [
+    ("APA 7판 7.5절 표·그림 본문 언급", "https://nool.ontariotechu.ca/writing/references-and-citations/american-psychological-association/apa-7th-edition-tables-and-figures.php"),
+    ("Anscombe 1973, Graphs in Statistical Analysis", "https://doi.org/10.1080/00031305.1973.10478966"),
+    ("Matejka, Fitzmaurice 2017, Same Stats, Different Graphs", "https://doi.org/10.1145/3025453.3025912"),
+    ("Weissgerber 외 2015, Beyond Bar and Line Graphs", "https://doi.org/10.1371/journal.pbio.1002128"),
+]
 HEADERS = ["분야", "행 구분", "페이지", "선발예정인원", "응시대상인원", "응시인원", "단위", "선발 원문", "대상 원문", "응시 원문"]
 ACCENT, MUTED, INK, PAPER_COLOR = "147D78", "B9C7C3", "183B3B", "F8F6F0"
 
@@ -239,6 +245,8 @@ def documents(folder, args, rows, groups, total, title, acquisition, evidence):
                ["사람이 제공" if acquisition["archive"] else "세롱이가 찾음", title, "raw/raw.pdf", date, "보관본 사용; 신규 다운로드 아님" if acquisition["archive"] else "신규 다운로드 사용"],
                ["세롱이가 찾음", "PDF 다운로드 주소", acquisition["download"] or "미확보", date, "사용" if acquisition["download"] else "사용 안 함"],
                ["사람이 제공", "보관본 출처 기록", "raw/ARCHIVE_SOURCE.md" if acquisition["archive"] else "../demo/cases/d-grade7/SOURCE.md", date, "사용" if acquisition["archive"] else "미사용"]]
+    for name, url in DISPLAY_REFS:
+        sources.append(["사람이 제공", name, url, date, "표현 근거로 사용; 세롱이 본문 미열람"])
     for record in evidence:
         sources.append(["세롱이가 찾음", record["title"], record["url"], record.get("checked_at", date), record["access"] + ("; 사용" if record["verified"] else "; 내용 미사용")])
     workbook(folder, rows, groups, sources)
@@ -322,7 +330,11 @@ execute:
 
 ## 표와 두 표현 비교 {#comparison}
 
+@tbl-comparison 은 분야별로 실제 시험을 본 사람 수예요.
+
 ''' + comparison + '''
+
+: 분야별 실제 시험 본 사람 수 {#tbl-comparison}
 
 ```{python}
 #| label: fig-comparison
@@ -336,7 +348,9 @@ draw(Path.cwd())
 display(Image(filename='figures/comparison.png'))
 ```
 
-A는 가장 큰 인원 규모, B는 상대적으로 작은 분야에 시선이 가도록 강조했어요. [엑셀](report.xlsx)에도 같은 비교표를 참조하는 편집 가능한 두 차트가 있어요.
+@fig-comparison 에서 A는 가장 큰 인원 규모, B는 상대적으로 작은 분야에 시선이 가도록 강조했어요. [엑셀](report.xlsx)에도 같은 비교표를 참조하는 편집 가능한 두 차트가 있어요.
+
+같은 숫자라도 무엇을 강조하느냐에 따라 먼저 읽히는 내용이 달라져요. 요약값이 같아도 분포는 전혀 다를 수 있고([Anscombe 1973](''' + DISPLAY_REFS[1][1] + '''), [Matejka, Fitzmaurice 2017](''' + DISPLAY_REFS[2][1] + ''')), 연구 논문에서도 분포를 가리는 막대그래프가 흔히 쓰여요([Weissgerber 외 2015](''' + DISPLAY_REFS[3][1] + ''')). 그래서 두 표현을 함께 보여 주고, 그림을 번호로 부르며 무엇을 볼지 밝혔어요([APA 7판 7.5절](''' + DISPLAY_REFS[0][1] + ''')).
 
 ## 자료로 알 수 있는 사실 {#facts}
 
