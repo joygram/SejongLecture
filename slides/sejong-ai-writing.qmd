@@ -285,10 +285,16 @@ Identity·Instructions·Examples·Context를 담아요.
 :::
 ::::
 
+::: {.prompt-basis}
+근거 · 표·그림은 번호로 부르고 왜 봐야 하는지 알려요 ([APA 7판 7.5절](https://nool.ontariotechu.ca/writing/references-and-citations/american-psychological-association/apa-7th-edition-tables-and-figures.php)). 막대처럼 같은 축 위 길이 비교가 가장 정확하게 읽혀요 ([Cleveland·McGill 1984](https://doi.org/10.1080/01621459.1984.10478080)).
+:::
+
 ::: notes
 보여주는 이유: 표·차트를 실제 본문에 도입하고 근거로 활용하는 문장 제시
 생각할 질문: 이 표와 차트를 왜 이 문장 옆에 넣나요?
 20–21′. 세 문장은 수업용 작성 예시. 표 앞에는 비교 목적·자료 범위, 뒤에는 글에서 주목할 값, 차트에는 드러내려는 모습을 연결. 표·그림 번호와 출처는 실제 문서에 맞게 수정. 다음 장에서 같은 자료를 직접 확인.
+근거: APA 7판 7.5절 = 본문에서 표·그림을 번호로 언급(callout), 왜 봐야 하는지 안내. "위 표"처럼 위치로 부르지 않음.
+근거: Cleveland·McGill 1984 (JASA 79:531–554) = 공통 축 위 위치 판단이 가장 정확. Heer·Bostock 2010 재현.
 :::
 
 ## 필요한 두 칸부터 읽어요
@@ -307,10 +313,15 @@ for _, row in groups.iterrows():
 
 [자료: 인사혁신처 · 2026년 국가공무원 7급 공채 1차 필기시험 응시현황 · 직군 계](../demo/cases/d-grade7/SOURCE.md){.reference-note}
 
+::: {.prompt-basis}
+근거 · 정확한 값을 보여 줄 땐 차트보다 표가 맞고, 잘 짠 표는 특정 숫자를 찾고 패턴을 보게 해요 ([Schwabish 2020](https://doi.org/10.1017/bca.2020.11)).
+:::
+
 ::: notes
 보여주는 이유: 같은 자료의 직군 계·응시인원 두 칸만 읽기
 생각할 질문: 이 표가 우리 질문의 어느 부분에 답하나요?
 21–23′. 원자료 PDF와 가공 CSV를 대조. 지원자·접수인원과 응시인원을 바꾸어 쓰지 않음. 비율 계산·시험 제도 설명 없음.
+근거: Schwabish, "Ten Guidelines for Better Tables", JBCA 11(2) 2020 초록 = 표는 정확한 값 제시용, 특정 숫자 찾기·패턴·이상값 발견.
 :::
 
 
