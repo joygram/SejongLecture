@@ -147,6 +147,8 @@ def check():
             raise RuntimeError('QR은 카드 설명 뒤 직접 해보기 화면에 하나만 배치해야 함')
         if page.locator('section.qr-entry h2').inner_text() != '직접 해보기':
             raise RuntimeError('QR 위치가 직접 해보기 화면이 아님')
+        if page.locator('section.closing-slide img.repo-qr').count() != 1 or page.locator('.reveal .slides img.repo-qr').count() != 1:
+            raise RuntimeError('저장소 QR은 마지막 장에 하나만 배치해야 함')
         titles = page.locator('.reveal .slides section h2').all_text_contents()
         if titles.index('직접 해보기') <= next(i for i, title in enumerate(titles) if title.startswith('카드 3')):
             raise RuntimeError('QR이 카드 설명보다 앞에 있음')
@@ -225,16 +227,18 @@ def check():
 
 
 STUDENT_URL = 'https://joygram.github.io/SejongLecture/handout/prompts.html'
+REPO_URL = 'https://github.com/joygram/SejongLecture'
 
 
 def qr():
     import qrcode
     import qrcode.image.svg
-    code = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
-    code.add_data(STUDENT_URL)
-    code.make(fit=True)
-    code.make_image(image_factory=qrcode.image.svg.SvgPathFillImage).save(SLIDES/'prompts-qr.svg')
-    print('prompts-qr.svg', STUDENT_URL)
+    for name, url in [('prompts-qr.svg', STUDENT_URL), ('repo-qr.svg', REPO_URL)]:
+        code = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
+        code.add_data(url)
+        code.make(fit=True)
+        code.make_image(image_factory=qrcode.image.svg.SvgPathFillImage).save(SLIDES/name)
+        print(name, url)
 
 
 def pdf():

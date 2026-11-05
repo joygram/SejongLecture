@@ -101,6 +101,13 @@ body {background:var(--paper);}
 .reveal .closing-message p {font-size:38px;font-weight:650;line-height:1.55;}
 .reveal .production-credit {margin-top:35px;border-top:1px solid var(--rule);padding-top:16px;}
 .reveal .production-credit p {font-size:17px;line-height:1.7;margin-bottom:8px;}
+.reveal .production-credit {display:flex;align-items:center;gap:28px;}
+.reveal .credit-text {flex:1;min-width:0;}
+.reveal .repo-share {flex:none;text-align:center;}
+.reveal .repo-share img.repo-qr {display:block;width:120px;height:120px;margin:0 auto 4px;background:#fff;}
+.reveal .repo-share p {margin:0;font-size:15px;}
+.reveal .repo-share figure {margin:0;}
+.reveal .repo-share figcaption {display:none;}
 .reveal .progress {height:3px;color:#dfa158;background:#dfe5db;}
 @media print {.reveal .slides section {print-color-adjust:exact;}}
 
