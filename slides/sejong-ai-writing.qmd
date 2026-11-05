@@ -668,17 +668,17 @@ Claude Code · Codex
 ::: {.chat-bubble .assistant}
 <span class="chat-who"><img class="chat-avatar" src="assets/avatar-narrator.svg" alt="나 얼굴">나</span>
 
-“초안이에요. 응시인원은 행정직 11,447명이 가장 많고, 지원 이유는 아직 몰라요. 지민은 원본과 숫자 대조, 수아는 차트와 문장 검토를 부탁해요.”
+“초안 올렸어. 시험 본 사람은 행정직이 11,447명으로 제일 많은데, 왜 골랐는지는 아직 몰라. 지민아 원본 숫자 한 번만 맞춰 봐 주고, 수아는 차트랑 문장 좀 봐 줘.”
 :::
 ::: {.chat-bubble .student}
 <span class="chat-who"><img class="chat-avatar" src="assets/avatar-jimin.svg" alt="지민 얼굴">지민</span>
 
-“원본과 숫자를 대조하고, 직접 확인한 항목을 기록할게요. 공유 주소도 확인 후 넣어요.”
+“오케이, PDF랑 숫자 맞춰 보고 확인한 거 표에 체크해 둘게. 링크는 내가 열어 보고 올릴게.”
 :::
 ::: {.chat-bubble .friend}
 <span class="chat-who"><img class="chat-avatar" src="assets/avatar-sua.svg" alt="수아 얼굴">수아</span>
 
-“차트 A와 B를 보고, ‘인기’라고 써도 되는지 문장도 볼게요.”
+“나는 A랑 B 중에 뭐 쓸지 볼게. 근데 ‘인기’라고 써도 되나? 그거 같이 얘기하자.”
 :::
 :::
 
