@@ -216,41 +216,42 @@ Claude Code · Codex로 파일을 만들거나 고쳐 봤나요?
 :::: {.tile-grid .four}
 
 ::: {.tile}
-[누가 읽고, 왜 쓰나요]{.tile-title}
+[역할 · AI는 누구로서 무엇을 목표로 돕나요]{.tile-title}
 
-7급 시험 현황이 궁금한 일반 독자를 위한 보고서다.
+너는 일반 독자를 위한 보고서 작성 도우미다. 작성자의 메모를 글로 정리하는 것이 목표다.
 :::
 
 ::: {.tile}
-[AI에게 무엇을 맡기나요]{.tile-title}
+[지시 · 할 일과 지킬 조건은 무엇인가요]{.tile-title}
 
-너의 역할은 보고서 작성 도우미다. 작성자의 메모를 글로 정리하라.
+메모만 바탕으로 주제를 소개하는 서론 한 문단을 써라. 메모에 없는 사실은 쓰지 마라.
 :::
 
 ::: {.tile}
-[꼭 지킬 것은 무엇인가요]{.tile-title}
-
-아래 메모만 바탕으로, 주제와 목적이 드러나는 서론 한 문단을 작성하라.
-:::
-
-::: {.tile}
-[어떤 문장을 원하나요]{.tile-title}
+[예시 · 어떤 문장을 원하나요]{.tile-title}
 
 “올해 7급 공채에서는 어떤 분야에 관심이 모였을까?”
+:::
+
+::: {.tile}
+[맥락 · AI가 알아야 할 자료는 무엇인가요]{.tile-title}
+
+우리 팀 메모: 2026년 7급 공채 현황을 보고 적은 관심사와 질문
 :::
 ::::
 
 **결과에 질문·독자·우리 메모가 남아 있나요?**
 
 ::: {.prompt-basis}
-근거 · 개발사 가이드도 같은 네 칸으로 나눠요 ([OpenAI](https://platform.openai.com/docs/guides/prompt-engineering) · [Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)). 역할 한 줄만으로는 정확도가 오르지 않았어요 ([Zheng 외](https://arxiv.org/abs/2311.10054)).
+근거 · 네 칸 = [OpenAI 가이드](https://platform.openai.com/docs/guides/prompt-engineering)의 Identity·Instructions·Examples·Context ([Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)도 같은 네 가지). 역할 한 줄만으론 정확도가 오르지 않았어요 ([Zheng 외](https://arxiv.org/abs/2311.10054)).
 :::
 
 ::: notes
-보여주는 이유: 짧은 요청에 빠진 맥락을 네 칸으로 채워 한 요청으로 연결
+보여주는 이유: 짧은 요청에 역할·지시·예시·맥락 네 칸을 채워 한 요청으로 연결
 생각할 질문: 우리 요청에서 빠진 칸은 무엇인가요?
 12–20′. 예시 요청, 실제 AI 응답 비교는 2부. 두 답의 좋고 나쁨 미리 판정 안 함. 역할만으로 결과 개선 보장 안 함.
 근거: OpenAI 개발자 메시지 = Identity·Instructions·Examples·Context. Anthropic = role·clear and direct·examples·context.
+근거: 목표 = OpenAI Identity 설명의 "high-level goals". 제약 = Anthropic "output format and constraints". 둘 다 칸 이름 아님.
 근거: 시스템 칸 = 개발자 지시 우선 (Instruction Hierarchy arXiv 2404.13208, Model Spec 2025-02-12).
 근거: 페르소나 = 사실형 2,410문항 정확도 개선 없음 (Zheng 외 arXiv 2311.10054).
 :::
