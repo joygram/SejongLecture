@@ -198,3 +198,15 @@
 - 워크벤치 = `slides/workbench/README.md`, 재사용 제작 프롬프트 = `slides/SLIDE_PROMPT.txt`.
 - `python slides/workbench.py build` → `check` → `serve`.
 - 청중용 HTML에는 발표자 노트 미포함, 발표자 노트는 로컬 워크벤치에서 확인.
+
+## 강연 주제 태그
+
+- AI 글쓰기 · 디지털 글쓰기 · 생성형 AI 교육 · 프롬프트 · 데이터 리터러시 · 보고서 작성 · 데이터 시각화 · AI 윤리.
+
+## 강연 문의
+
+- 강연·워크숍이 필요한 경우 [GitHub 문의](https://github.com/joygram/SejongLecture/issues/new)로 주제·대상·희망 일정을 남겨 주세요.
+
+---
+
+- 이 저장소의 강연과 강의 자료는 AI와 함께 만들었습니다.
